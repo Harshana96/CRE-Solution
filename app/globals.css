@@ -1,0 +1,59 @@
+@import "tailwindcss";
+@config "../tailwind.config.ts";
+
+:root {
+  --background: #ffffff;
+  --foreground: #0b0f14;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+
+  /* CRE Solutions brand tokens */
+  --color-brand-red: #e30613;
+  --color-brand-red-dark: #b8050f;
+  --color-brand-red-soft: #fdeceb;
+  --color-brand-ink: #0b0f14;
+  --color-brand-ink-2: #12181f;
+  --color-brand-white: #ffffff;
+  --color-brand-light: #f5f7f8;
+  --color-brand-line: #e4e8ea;
+  --color-brand-muted: #5b6570;
+
+  --font-heading: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
+  --font-body: var(--font-plex), ui-sans-serif, system-ui, sans-serif;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-body);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  text-wrap: balance;
+}
+
+::selection {
+  background: var(--color-brand-red);
+  color: #fff;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-brand-red);
+  outline-offset: 3px;
+}
+
+.container-cre {
+  max-width: 1280px;
+  margin-inline: auto;
+  padding-inline: 1.5rem;
+}
+
+@media (min-width: 1024px) {
+  .container-cre {
+    padding-inline: 2rem;
+  }
+}
