@@ -60,10 +60,13 @@ export default function SriLankaMap() {
           : undefined
       }
     >
-      <div className="relative mx-auto w-full max-w-[340px]">
+      <div
+        className="relative mx-auto w-auto max-w-full"
+        style={{ aspectRatio: `${VB_WIDTH} / ${VB_HEIGHT}`, maxHeight: "min(70vh, 640px)" }}
+      >
         <svg
           viewBox={sriLankaMapViewBox}
-          className="w-full"
+          className="block h-full w-full"
           role="img"
           aria-label="Map of Sri Lanka's districts — hover a district to see completed CRE Solutions projects"
         >

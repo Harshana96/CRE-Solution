@@ -4,6 +4,7 @@ import EngineeringProcess from "@/components/sections/EngineeringProcess";
 import ContactCTA from "@/components/sections/ContactCTA";
 import Container from "@/components/ui/Container";
 import SectionHeading from "@/components/ui/SectionHeading";
+import Reveal from "@/components/ui/Reveal";
 import { solutions, type SolutionSlug } from "@/data/solutions";
 import { batteryHighlights, evChargingHighlights } from "@/data/technology";
 
@@ -27,7 +28,7 @@ export default function SolutionDetail({ slug }: { slug: SolutionSlug }) {
       <section className="bg-white py-24">
         <Container>
           <div className="grid grid-cols-1 gap-14 lg:grid-cols-[1fr_1.1fr]">
-            <div>
+            <Reveal>
               <SectionHeading eyebrow="Overview" title={solution.summary} />
               <p className="mt-5 text-brand-muted">{solution.heroSubline}</p>
               <ul className="mt-7 space-y-3">
@@ -40,20 +41,24 @@ export default function SolutionDetail({ slug }: { slug: SolutionSlug }) {
                   </li>
                 ))}
               </ul>
-            </div>
+            </Reveal>
 
             <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
-              {solution.applications.map((app) => (
-                <div key={app.title} className="rounded-xl border border-brand-line bg-brand-light p-6">
+              {solution.applications.map((app, i) => (
+                <Reveal
+                  key={app.title}
+                  delay={i * 0.08}
+                  className="rounded-xl border border-brand-line bg-brand-light p-6"
+                >
                   <h3 className="text-base font-bold text-brand-ink">{app.title}</h3>
                   <p className="mt-2 text-sm text-brand-muted">{app.description}</p>
-                </div>
+                </Reveal>
               ))}
             </div>
           </div>
 
           {extraHighlights && (
-            <div className="mt-16 rounded-xl border border-brand-line bg-brand-ink p-9">
+            <Reveal className="mt-16 rounded-xl border border-brand-line bg-brand-ink p-9">
               <h3 className="text-sm font-bold uppercase tracking-widest text-brand-red">
                 Specification Highlights
               </h3>
@@ -67,7 +72,7 @@ export default function SolutionDetail({ slug }: { slug: SolutionSlug }) {
                   </span>
                 ))}
               </div>
-            </div>
+            </Reveal>
           )}
         </Container>
       </section>

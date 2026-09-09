@@ -1,11 +1,15 @@
 import { MapPin, Zap } from "lucide-react";
 import { projects as allProjects, type Project } from "@/data/projects";
 import { placeholderGradient } from "@/lib/projectPlaceholder";
+import Reveal from "@/components/ui/Reveal";
 import { cn } from "@/lib/utils";
 
 function ProjectCard({ project, index }: { project: Project; index: number }) {
   return (
-    <div className="group overflow-hidden rounded-xl border border-brand-line bg-white transition-all duration-200 hover:-translate-y-1 hover:shadow-[0_24px_48px_-24px_rgba(11,15,20,0.28)]">
+    <Reveal
+      delay={(index % 4) * 0.08}
+      className="group h-full overflow-hidden rounded-xl border border-brand-line bg-white transition-all duration-200 hover:-translate-y-1 hover:shadow-[0_24px_48px_-24px_rgba(11,15,20,0.28)]"
+    >
       <div
         className="relative aspect-[4/3] overflow-hidden"
         style={{ background: placeholderGradient(index) }}
@@ -34,7 +38,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
         </div>
         <p className="mt-3 text-xs leading-relaxed text-brand-muted">{project.description}</p>
       </div>
-    </div>
+    </Reveal>
   );
 }
 
