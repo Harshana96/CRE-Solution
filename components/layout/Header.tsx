@@ -42,7 +42,7 @@ export default function Header() {
       )}
     >
       <div className="container-cre flex items-center justify-between">
-        <Logo tone={transparent ? "light" : "dark"} />
+        <Logo tone={transparent ? "light" : "dark"} showTagline={false} size={56} />
 
         <nav className="hidden items-center gap-8 lg:flex">
           {navItems.map((item) => (
