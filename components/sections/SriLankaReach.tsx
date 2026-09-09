@@ -1,6 +1,10 @@
 import Container from "@/components/ui/Container";
 import SectionHeading from "@/components/ui/SectionHeading";
-import SriLankaMap from "@/components/sections/SriLankaMap";
+// Previous flat-color hover map, kept in the codebase for future reuse —
+// see components/sections/SriLankaMap.tsx. Swapped out below for the
+// zoomable 3D-pin version per client request.
+// import SriLankaMap from "@/components/sections/SriLankaMap";
+import SriLankaMapPins from "@/components/sections/SriLankaMapPins";
 import { company } from "@/data/company";
 
 export default function SriLankaReach() {
@@ -16,12 +20,12 @@ export default function SriLankaReach() {
             />
             <div className="mt-8 inline-flex items-center gap-2.5 rounded-full border border-brand-line bg-white px-4 py-2 text-xs font-semibold text-brand-ink">
               <span className="h-2 w-2 rounded-full bg-brand-red" />
-              Hover or tap a district to see completed projects
+              Zoom in to see every completed project, district by district
             </div>
           </div>
 
           <div className="mt-12 rounded-xl border border-brand-line bg-white p-8">
-            <SriLankaMap />
+            <SriLankaMapPins />
           </div>
         </div>
       </Container>
