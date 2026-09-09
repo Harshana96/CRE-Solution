@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Hero from "@/components/sections/Hero";
 import Stats from "@/components/sections/Stats";
 import SolutionsGrid from "@/components/sections/SolutionsGrid";
@@ -25,23 +24,8 @@ export default function HomePage() {
       <Hero />
       <Stats tone="light" />
 
-      <section className="relative overflow-hidden bg-white py-24">
-        {/* Faint background watermark of the company logo, filling the
-            otherwise-empty white space in this section on wide screens. */}
-        <div
-          aria-hidden
-          className="pointer-events-none absolute -right-32 top-1/2 hidden -translate-y-1/2 opacity-[0.06] lg:block"
-        >
-          <Image
-            src="/logo/cre-logo.png"
-            alt=""
-            width={680}
-            height={680}
-            className="h-[560px] w-[560px] object-contain xl:h-[680px] xl:w-[680px]"
-          />
-        </div>
-
-        <Container className="relative">
+      <section className="bg-white py-24">
+        <Container>
           <div className="grid grid-cols-1 gap-12 lg:grid-cols-2 lg:items-center">
             <SectionHeading
               eyebrow="About CRE Solutions"
