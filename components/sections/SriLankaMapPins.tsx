@@ -25,6 +25,62 @@ const MAX_BOX_HEIGHT = "min(74vh, 680px)";
 const regionByName = new Map<string, (typeof reachRegions)[number]>(
   reachRegions.map((r) => [r.name, r])
 );
+const districtByName = new Map(sriLankaDistricts.map((d) => [d.name, d]));
+
+// Below this zoom, districts show a single count badge (matching the real
+// portfolio figures, e.g. "50+") instead of individual pins — spreading 50
+// dots across Kurunegala at the overview zoom would just be noise. Zooming
+// past the threshold (scroll, +/- buttons, or clicking a district) reveals
+// the pins underneath it.
+const CLUSTER_ZOOM_THRESHOLD = 1.8;
+// Cap on how many *unnamed* filler pins we draw per district beyond the
+// named projects we actually have client/capacity details for — keeps a
+// district with a "50+" count from turning into an unreadable pincushion,
+// while still visually reflecting that there are more completed projects
+// than the ones we can name.
+const MAX_FILLER_PINS_PER_DISTRICT = 5;
+
+interface FillerPin {
+  id: string;
+  district: string;
+  mapX: number;
+  mapY: number;
+}
+
+function parseCount(count: string): number {
+  const n = parseInt(count, 10);
+  return Number.isNaN(n) ? 0 : n;
+}
+
+const namedCountByDistrict = new Map<string, number>();
+for (const project of projects) {
+  namedCountByDistrict.set(project.district, (namedCountByDistrict.get(project.district) ?? 0) + 1);
+}
+
+// Deterministic golden-angle spiral so filler pins fan out evenly around a
+// district's centroid without overlapping — same output on every render,
+// no randomness to fight with React.
+function fillerOffset(index: number) {
+  const angle = index * 137.508 * (Math.PI / 180);
+  const radius = 9 + index * 4.5;
+  return { dx: Math.cos(angle) * radius, dy: Math.sin(angle) * radius };
+}
+
+const fillerPins: FillerPin[] = reachRegions.flatMap((region) => {
+  const district = districtByName.get(region.name);
+  if (!district) return [];
+  const named = namedCountByDistrict.get(region.name) ?? 0;
+  const extra = Math.min(Math.max(parseCount(region.count) - named, 0), MAX_FILLER_PINS_PER_DISTRICT);
+  return Array.from({ length: extra }, (_, i) => {
+    const { dx, dy } = fillerOffset(i);
+    return {
+      id: `${region.name}-filler-${i}`,
+      district: region.name,
+      mapX: district.cx + dx,
+      mapY: district.cy + dy,
+    };
+  });
+});
 
 function clamp(value: number, min: number, max: number) {
   return Math.min(max, Math.max(min, value));
@@ -35,6 +91,7 @@ export default function SriLankaMapPins() {
   const [zoom, setZoom] = useState(MIN_ZOOM);
   const [origin, setOrigin] = useState(DEFAULT_ORIGIN);
   const [activeProject, setActiveProject] = useState<string | null>(null);
+  const [activeFiller, setActiveFiller] = useState<string | null>(null);
   const dragState = useRef<{ startX: number; startY: number; origin: { x: number; y: number } } | null>(null);
   const [isDragging, setIsDragging] = useState(false);
 
@@ -117,13 +174,20 @@ export default function SriLankaMapPins() {
   const groupTransform = `translate(${CENTER.x} ${CENTER.y}) scale(${zoom}) translate(${-origin.x} ${-origin.y})`;
   const pinScale = PIN_BASE_SCALE / zoom;
 
+  const showPins = zoom >= CLUSTER_ZOOM_THRESHOLD;
+
+  function toScreenPercent(mapX: number, mapY: number) {
+    return {
+      left: `${((CENTER.x + zoom * (mapX - origin.x)) / VB_WIDTH) * 100}%`,
+      top: `${((CENTER.y + zoom * (mapY - origin.y)) / VB_HEIGHT) * 100}%`,
+    };
+  }
+
   const active = projects.find((p) => p.slug === activeProject);
-  const activeTooltipPos = active
-    ? {
-        left: `${(CENTER.x + zoom * (active.mapX - origin.x)) / VB_WIDTH * 100}%`,
-        top: `${(CENTER.y + zoom * (active.mapY - origin.y)) / VB_HEIGHT * 100}%`,
-      }
-    : null;
+  const activeTooltipPos = active ? toScreenPercent(active.mapX, active.mapY) : null;
+
+  const activeFillerPin = fillerPins.find((p) => p.id === activeFiller);
+  const activeFillerTooltipPos = activeFillerPin ? toScreenPercent(activeFillerPin.mapX, activeFillerPin.mapY) : null;
 
   return (
     <div>
@@ -179,26 +243,75 @@ export default function SriLankaMapPins() {
               );
             })}
 
-            {projects.map((project) => (
-              <g
-                key={project.slug}
-                transform={`translate(${project.mapX} ${project.mapY}) scale(${pinScale})`}
-                className="cursor-pointer"
-                onMouseEnter={() => setActiveProject(project.slug)}
-                onMouseLeave={() => setActiveProject((cur) => (cur === project.slug ? null : cur))}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setActiveProject(project.slug);
-                }}
-                tabIndex={0}
-                role="button"
-                aria-label={`${project.client}, ${project.location}: ${project.capacity}`}
-              >
-                <g transform="translate(-12 -12)">
-                  <MapPinCircle size={24} id={project.slug} />
+            {!showPins &&
+              reachRegions.map((region) => {
+                const district = districtByName.get(region.name);
+                if (!district) return null;
+                return (
+                  <g
+                    key={`cluster-${region.name}`}
+                    transform={`translate(${district.cx} ${district.cy}) scale(${1 / zoom})`}
+                    className="cursor-pointer"
+                    onClick={() => zoomToDistrict(district.cx, district.cy)}
+                  >
+                    <circle r="15" fill={BRAND_RED} stroke="#FFFFFF" strokeWidth="2" />
+                    <text
+                      textAnchor="middle"
+                      dominantBaseline="central"
+                      fontSize="11"
+                      fontWeight={700}
+                      fill="#FFFFFF"
+                    >
+                      {region.count}
+                    </text>
+                  </g>
+                );
+              })}
+
+            {showPins &&
+              projects.map((project) => (
+                <g
+                  key={project.slug}
+                  transform={`translate(${project.mapX} ${project.mapY}) scale(${pinScale})`}
+                  className="cursor-pointer"
+                  onMouseEnter={() => setActiveProject(project.slug)}
+                  onMouseLeave={() => setActiveProject((cur) => (cur === project.slug ? null : cur))}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setActiveProject(project.slug);
+                  }}
+                  tabIndex={0}
+                  role="button"
+                  aria-label={`${project.client}, ${project.location}: ${project.capacity}`}
+                >
+                  <g transform="translate(-12 -12)">
+                    <MapPinCircle size={24} id={project.slug} />
+                  </g>
                 </g>
-              </g>
-            ))}
+              ))}
+
+            {showPins &&
+              fillerPins.map((pin) => (
+                <g
+                  key={pin.id}
+                  transform={`translate(${pin.mapX} ${pin.mapY}) scale(${pinScale})`}
+                  className="cursor-pointer"
+                  opacity={0.6}
+                  onMouseEnter={() => setActiveFiller(pin.id)}
+                  onMouseLeave={() => setActiveFiller((cur) => (cur === pin.id ? null : cur))}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setActiveFiller(pin.id);
+                  }}
+                  tabIndex={0}
+                  role="button"
+                  aria-label={`Additional completed project in ${pin.district}`}
+                >
+                  <g transform="translate(-9 -9)">
+                    <MapPinCircle size={18} id={pin.id} />
+                  </g>
+                </g>
+              ))}
           </g>
         </svg>
 
@@ -217,6 +330,16 @@ export default function SriLankaMapPins() {
               </p>
             </div>
             <span className="absolute left-1/2 top-full h-2.5 w-2.5 -translate-x-1/2 -translate-y-1/2 rotate-45 border-b border-r border-brand-line bg-white" />
+          </div>
+        )}
+
+        {activeFillerPin && activeFillerTooltipPos && (
+          <div
+            className="pointer-events-none absolute z-10 -translate-x-1/2 -translate-y-[calc(100%+8px)] whitespace-nowrap rounded-md border border-brand-line bg-white px-3 py-1.5 shadow-[0_10px_24px_-10px_rgba(11,15,20,0.35)]"
+            style={activeFillerTooltipPos}
+          >
+            <p className="text-[10px] font-semibold text-brand-ink">Completed project</p>
+            <p className="text-[10px] text-brand-muted">{activeFillerPin.district} District</p>
           </div>
         )}
 
@@ -251,7 +374,9 @@ export default function SriLankaMapPins() {
       </div>
 
       <p className="mt-3 text-center text-xs text-brand-muted">
-        Scroll or use +/- to zoom, drag to pan, click a district to zoom into its projects.
+        {showPins
+          ? "Drag to pan, scroll or use +/- to zoom further, hover a pin for project details."
+          : "Each badge shows completed projects per district — scroll, use +, or click a district to zoom in and see them."}
       </p>
     </div>
   );
