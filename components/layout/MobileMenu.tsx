@@ -10,6 +10,18 @@ import { cn } from "@/lib/utils";
 
 export default function MobileMenu({ transparent }: { transparent: boolean }) {
   const [open, setOpen] = useState(false);
+  // `document` exists on both server and client, so `typeof document !==
+  // "undefined"` is true on the client's very first (hydration) render —
+  // but false during SSR — which made React see mismatched output at this
+  // exact spot and log a hydration error. Deferring the portal to a
+  // post-hydration effect keeps the first client render identical to the
+  // server's (both skip it), then mounts it safely afterwards.
+  const [canPortal, setCanPortal] = useState(false);
+
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- intentional: this is the standard "mounted" gate for a client-only portal, not a data sync.
+    setCanPortal(true);
+  }, []);
 
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
@@ -77,7 +89,7 @@ export default function MobileMenu({ transparent }: { transparent: boolean }) {
           `position: fixed` descendants — nested inside the header, this
           overlay would size itself to the header's own small box instead of
           the full viewport, letting the page underneath show through. */}
-      {typeof document !== "undefined" && createPortal(panel, document.body)}
+      {canPortal && createPortal(panel, document.body)}
     </div>
   );
 }
