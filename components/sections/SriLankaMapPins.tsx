@@ -1,21 +1,26 @@
 "use client";
 
-import { useRef, useState, type PointerEvent as ReactPointerEvent, type WheelEvent } from "react";
+import { useEffect, useRef, useState, type PointerEvent as ReactPointerEvent } from "react";
 import { ZoomIn, ZoomOut, Maximize2, Zap } from "lucide-react";
 import { sriLankaDistricts, sriLankaMapViewBox } from "@/data/sriLankaDistricts";
 import { reachRegions } from "@/data/company";
 import { projects } from "@/data/projects";
 import { placeholderGradient } from "@/lib/projectPlaceholder";
-import MapPin3D from "@/components/ui/MapPin3D";
+import MapPinCircle from "@/components/ui/MapPinCircle";
 
 const BRAND_RED = "#E30613";
 const MIN_ZOOM = 1;
 const MAX_ZOOM = 6;
-const PIN_BASE_SCALE = 0.62;
+const PIN_BASE_SCALE = 0.55;
 
 const [VB_WIDTH, VB_HEIGHT] = sriLankaMapViewBox.split(" ").slice(2).map(Number);
 const CENTER = { x: VB_WIDTH / 2, y: VB_HEIGHT / 2 };
 const DEFAULT_ORIGIN = { ...CENTER };
+// Longest side capped by viewport height; the other side derives from the
+// real aspect ratio so neither dimension gets clamped independently (the
+// bug that made the map render squashed into a sliver — see MAX_BOX below).
+const ASPECT = VB_WIDTH / VB_HEIGHT;
+const MAX_BOX_HEIGHT = "min(74vh, 680px)";
 
 const regionByName = new Map<string, (typeof reachRegions)[number]>(
   reachRegions.map((r) => [r.name, r])
@@ -58,11 +63,22 @@ export default function SriLankaMapPins() {
     setOrigin(newOrigin);
   }
 
-  function handleWheel(e: WheelEvent<SVGSVGElement>) {
-    e.preventDefault();
-    const point = toSvgPoint(e.clientX, e.clientY);
-    zoomAt(point, e.deltaY < 0 ? 1.18 : 1 / 1.18);
-  }
+  // Attached as a native, non-passive listener (not React's onWheel) so
+  // preventDefault() actually stops the page from scrolling while zooming —
+  // React registers onWheel as passive by default, which silently ignores
+  // preventDefault() and lets the page scroll underneath the map.
+  useEffect(() => {
+    const el = svgRef.current;
+    if (!el) return;
+    const onWheel = (e: globalThis.WheelEvent) => {
+      e.preventDefault();
+      const point = toSvgPoint(e.clientX, e.clientY);
+      zoomAt(point, e.deltaY < 0 ? 1.18 : 1 / 1.18);
+    };
+    el.addEventListener("wheel", onWheel, { passive: false });
+    return () => el.removeEventListener("wheel", onWheel);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [zoom, origin]);
 
   function zoomToDistrict(cx: number, cy: number) {
     const newZoom = clamp(Math.max(zoom, 2.6), MIN_ZOOM, MAX_ZOOM);
@@ -112,8 +128,14 @@ export default function SriLankaMapPins() {
   return (
     <div>
       <div
-        className="relative mx-auto w-auto max-w-full overflow-hidden rounded-lg"
-        style={{ aspectRatio: `${VB_WIDTH} / ${VB_HEIGHT}`, maxHeight: "min(74vh, 680px)" }}
+        className="relative mx-auto overflow-hidden rounded-lg"
+        style={{
+          aspectRatio: `${VB_WIDTH} / ${VB_HEIGHT}`,
+          // Width is derived from the height cap up front (rather than
+          // capping height on a full-width box after the fact), so the map
+          // never ends up letterboxed/squashed to a sliver on wide cards.
+          width: `min(100%, calc(${MAX_BOX_HEIGHT} * ${ASPECT}))`,
+        }}
       >
         <svg
           ref={svgRef}
@@ -122,7 +144,6 @@ export default function SriLankaMapPins() {
           style={{ cursor: zoom > MIN_ZOOM ? (isDragging ? "grabbing" : "grab") : "default" }}
           role="img"
           aria-label="Zoomable map of Sri Lanka's districts with pins for each completed CRE Solutions project"
-          onWheel={handleWheel}
           onPointerDown={handlePointerDown}
           onPointerMove={handlePointerMove}
           onPointerUp={handlePointerUp}
@@ -173,8 +194,8 @@ export default function SriLankaMapPins() {
                 role="button"
                 aria-label={`${project.client}, ${project.location}: ${project.capacity}`}
               >
-                <g transform="translate(-12 -30)">
-                  <MapPin3D size={24} id={project.slug} />
+                <g transform="translate(-12 -12)">
+                  <MapPinCircle size={24} id={project.slug} />
                 </g>
               </g>
             ))}
