@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import { Menu, X } from "lucide-react";
 import { navItems } from "@/components/layout/Header";
 import Button from "@/components/ui/Button";
@@ -49,14 +50,14 @@ export default function MobileMenu({ transparent }: { transparent: boolean }) {
         </div>
         <nav className="flex flex-1 flex-col justify-center gap-2 px-8">
           {navItems.map((item) => (
-            <a
+            <Link
               key={item.href}
               href={item.href}
               onClick={() => setOpen(false)}
               className="border-b border-white/10 py-4 text-2xl font-bold text-white transition-colors hover:text-brand-red"
             >
               {item.label}
-            </a>
+            </Link>
           ))}
         </nav>
         <div className="px-8 pb-10">

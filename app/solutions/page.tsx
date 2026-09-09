@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { Sun, BatteryCharging, PlugZap, Zap, ArrowUpRight } from "lucide-react";
 import PageHero from "@/components/sections/PageHero";
 import ContactCTA from "@/components/sections/ContactCTA";
@@ -51,13 +52,13 @@ export default function SolutionsOverviewPage() {
                       </li>
                     ))}
                   </ul>
-                  <a
+                  <Link
                     href={`/solutions/${solution.slug}`}
                     className="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-brand-ink transition-colors hover:text-brand-red"
                   >
                     Explore {solution.shortTitle}
                     <ArrowUpRight size={16} />
-                  </a>
+                  </Link>
                 </div>
               );
             })}

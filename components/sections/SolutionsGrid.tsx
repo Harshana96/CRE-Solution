@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Sun, BatteryCharging, PlugZap, Zap, ArrowUpRight } from "lucide-react";
 import Container from "@/components/ui/Container";
 import SectionHeading from "@/components/ui/SectionHeading";
@@ -23,7 +24,7 @@ export default function SolutionsGrid() {
             const Icon = iconMap[solution.icon];
             return (
               <Reveal key={solution.slug} delay={i * 0.08}>
-                <a
+                <Link
                   href={`/solutions/${solution.slug}`}
                   className="group relative flex h-full flex-col gap-5 rounded-xl border border-brand-line bg-white p-7 transition-all duration-200 hover:-translate-y-1.5 hover:border-brand-red/40 hover:shadow-[0_24px_48px_-24px_rgba(11,15,20,0.28)]"
                 >
@@ -46,7 +47,7 @@ export default function SolutionsGrid() {
                       className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
                     />
                   </span>
-                </a>
+                </Link>
               </Reveal>
             );
           })}

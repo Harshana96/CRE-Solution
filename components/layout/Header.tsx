@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Logo from "@/components/ui/Logo";
 import Button from "@/components/ui/Button";
@@ -45,7 +46,7 @@ export default function Header() {
 
         <nav className="hidden items-center gap-8 lg:flex">
           {navItems.map((item) => (
-            <a
+            <Link
               key={item.href}
               href={item.href}
               className={cn(
@@ -56,7 +57,7 @@ export default function Header() {
               )}
             >
               {item.label}
-            </a>
+            </Link>
           ))}
         </nav>
 

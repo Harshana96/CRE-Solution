@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { Target, Eye, Compass } from "lucide-react";
 import PageHero from "@/components/sections/PageHero";
 import SriLankaReach from "@/components/sections/SriLankaReach";
@@ -78,9 +79,9 @@ export default function AboutPage() {
           <div className="mt-8 flex items-center gap-2 text-sm text-brand-muted">
             <Compass size={16} className="text-brand-red" />
             See the full process detail on our{" "}
-            <a href="/solutions/solar-pv" className="font-semibold text-brand-ink hover:text-brand-red">
+            <Link href="/solutions/solar-pv" className="font-semibold text-brand-ink hover:text-brand-red">
               Solar PV
-            </a>{" "}
+            </Link>{" "}
             page.
           </div>
         </Container>

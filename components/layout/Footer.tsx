@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Mail, MapPin, Phone, Globe } from "lucide-react";
 import Logo from "@/components/ui/Logo";
 import { company } from "@/data/company";
@@ -29,9 +30,9 @@ export default function Footer() {
           <ul className="flex flex-col gap-3 text-sm">
             {solutions.map((s) => (
               <li key={s.slug}>
-                <a href={`/solutions/${s.slug}`} className="transition-colors hover:text-brand-red">
+                <Link href={`/solutions/${s.slug}`} className="transition-colors hover:text-brand-red">
                   {s.title}
-                </a>
+                </Link>
               </li>
             ))}
           </ul>
@@ -44,9 +45,9 @@ export default function Footer() {
           <ul className="flex flex-col gap-3 text-sm">
             {companyLinks.map((l) => (
               <li key={l.href}>
-                <a href={l.href} className="transition-colors hover:text-brand-red">
+                <Link href={l.href} className="transition-colors hover:text-brand-red">
                   {l.label}
-                </a>
+                </Link>
               </li>
             ))}
           </ul>
