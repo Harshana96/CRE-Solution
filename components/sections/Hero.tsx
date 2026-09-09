@@ -45,8 +45,9 @@ export default function Hero() {
           transition={{ duration: 0.65, ease: "easeOut", delay: 0.08 }}
           className="mt-6 max-w-3xl text-[2.6rem] font-extrabold leading-[1.06] sm:text-6xl lg:text-[4.25rem]"
         >
-          {company.tagline.split(" of ")[0]} of{" "}
-          <span className="text-brand-red">{company.tagline.split(" of ")[1]}</span>
+          <span className="text-brand-red">Engineering</span> the{" "}
+          <span className="text-brand-red">Energy</span> of{" "}
+          <span className="text-brand-red">Tomorrow</span>
         </motion.h1>
 
         <motion.p
