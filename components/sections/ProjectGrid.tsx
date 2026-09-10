@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { MapPin, Zap } from "lucide-react";
 import { projects as allProjects, type Project } from "@/data/projects";
 import { placeholderGradient } from "@/lib/projectPlaceholder";
@@ -12,17 +13,27 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
     >
       <div
         className="relative aspect-[4/3] overflow-hidden"
-        style={{ background: placeholderGradient(index) }}
+        style={project.image ? undefined : { background: placeholderGradient(index) }}
       >
-        <div
-          aria-hidden
-          className="absolute inset-0 opacity-30"
-          style={{
-            backgroundImage:
-              "repeating-linear-gradient(65deg, transparent 0 20px, rgba(255,255,255,0.15) 20px 21px)",
-          }}
-        />
-        <span className="absolute left-3 top-3 rounded-full bg-brand-red px-3 py-1 text-[11px] font-bold uppercase tracking-wide text-white">
+        {project.image ? (
+          <Image
+            src={project.image}
+            alt={`${project.client}, ${project.location} — ${project.capacity}`}
+            fill
+            sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
+            className="object-cover transition-transform duration-300 group-hover:scale-105"
+          />
+        ) : (
+          <div
+            aria-hidden
+            className="absolute inset-0 opacity-30"
+            style={{
+              backgroundImage:
+                "repeating-linear-gradient(65deg, transparent 0 20px, rgba(255,255,255,0.15) 20px 21px)",
+            }}
+          />
+        )}
+        <span className="absolute left-3 top-3 z-10 rounded-full bg-brand-red px-3 py-1 text-[11px] font-bold uppercase tracking-wide text-white">
           {project.systemType}
         </span>
       </div>

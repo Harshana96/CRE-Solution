@@ -1,7 +1,15 @@
 // Source: CRE_Solutions_Portfolio.pdf — "Our Works Speaks For Us" page.
-// No client photographs were supplied with this build; `image` is left null
-// and pages fall back to a generated placeholder. Drop real files into
-// /public/images/projects and set `image` to that path when available.
+//
+// `image`: real client site photos, selected from the "Project wise photos"
+// drive folder (one representative photo per project — not every photo in
+// that folder was used), resized/compressed and renamed to
+// public/images/projects/<slug>.jpg. Still `null` for the two projects with
+// no matching folder in that drive export (Ganegoda Temple, Mr. Devinda) —
+// pages fall back to a generated placeholder for those until real photos
+// are supplied. Note: the drive folder named "Trincomalee site (MR Dewinda)"
+// is actually the LB Finance Building shoot (visible "LB FINANCE" signage
+// throughout), not a separate Devinda site — used for lb-finance-trincomalee
+// below, not mr-devinda-trincomalee.
 //
 // `district` is not from the portfolio — it's the administrative district
 // each project's town sits in (a geographic fact, e.g. Polgahawela and
@@ -51,7 +59,7 @@ export const projects: Project[] = [
     systemType: "Solar PV",
     capacity: "5 kW",
     description: "5 kW residential solar PV system in Wilgodawaththa, Kurunegala.",
-    image: null,
+    image: "/images/projects/mr-sampath-wilgodawaththa.jpg",
   },
   {
     slug: "mr-janitha-mallawapitiya",
@@ -63,7 +71,7 @@ export const projects: Project[] = [
     systemType: "Hybrid",
     capacity: "5 kW",
     description: "5 kW hybrid solar system for residential backup and daily use.",
-    image: null,
+    image: "/images/projects/mr-janitha-mallawapitiya.jpg",
   },
   {
     slug: "kmee-restaurant-katunayake",
@@ -75,7 +83,7 @@ export const projects: Project[] = [
     systemType: "Hybrid + Battery",
     capacity: "5 kW Hybrid, 5 kWh Battery",
     description: "5 kW hybrid solar system with 5 kWh battery storage for continuous restaurant operation.",
-    image: null,
+    image: "/images/projects/kmee-restaurant-katunayake.jpg",
   },
   {
     slug: "mr-devinda-trincomalee",
@@ -100,7 +108,7 @@ export const projects: Project[] = [
     systemType: "Off-Grid + Battery",
     capacity: "5 kW Off-Grid, 14 kWh Battery",
     description: "5 kW off-grid hybrid inverter system with 14 kWh battery storage.",
-    image: null,
+    image: "/images/projects/mr-bommugala-kurunegala.jpg",
   },
   {
     slug: "kiyoto-coffee-mathale",
@@ -113,7 +121,7 @@ export const projects: Project[] = [
     capacity: "12 kW On-Grid, 20 kW Hybrid, 16 kWh Battery",
     description:
       "Combined 12 kW on-grid and 20 kW hybrid solar system with 16 kWh of battery storage for a commercial coffee business.",
-    image: null,
+    image: "/images/projects/kiyoto-coffee-mathale.jpg",
   },
   {
     slug: "lb-finance-trincomalee",
@@ -125,6 +133,6 @@ export const projects: Project[] = [
     systemType: "Solar PV",
     capacity: "40 kW",
     description: "40 kW commercial solar PV installation at the LB Finance Building, Trincomalee.",
-    image: null,
+    image: "/images/projects/lb-finance-trincomalee.jpg",
   },
 ];

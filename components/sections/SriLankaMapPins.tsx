@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, type PointerEvent as ReactPointerEvent } from "react";
+import Image from "next/image";
 import { ZoomIn, ZoomOut, Maximize2, Zap } from "lucide-react";
 import { sriLankaDistricts, sriLankaMapViewBox } from "@/data/sriLankaDistricts";
 import { reachRegions } from "@/data/company";
@@ -320,7 +321,13 @@ export default function SriLankaMapPins() {
             className="pointer-events-none absolute z-10 w-40 -translate-x-1/2 -translate-y-[calc(100%+10px)] overflow-hidden rounded-lg border border-brand-line bg-white shadow-[0_16px_32px_-12px_rgba(11,15,20,0.35)]"
             style={activeTooltipPos}
           >
-            <div className="aspect-[4/3]" style={{ background: placeholderGradient(0) }} />
+            {active.image ? (
+              <div className="relative aspect-[4/3]">
+                <Image src={active.image} alt="" fill sizes="160px" className="object-cover" />
+              </div>
+            ) : (
+              <div className="aspect-[4/3]" style={{ background: placeholderGradient(0) }} />
+            )}
             <div className="p-2.5">
               <p className="truncate text-[11px] font-bold text-brand-ink">{active.client}</p>
               <p className="truncate text-[10px] text-brand-muted">{active.location}</p>
