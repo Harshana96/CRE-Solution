@@ -1,12 +1,10 @@
 "use client";
 
 import { useEffect, useRef, useState, type PointerEvent as ReactPointerEvent } from "react";
-import Image from "next/image";
-import { ZoomIn, ZoomOut, Maximize2, Zap } from "lucide-react";
+import { ZoomIn, ZoomOut, Maximize2 } from "lucide-react";
 import { sriLankaDistricts, sriLankaMapViewBox } from "@/data/sriLankaDistricts";
 import { reachRegions } from "@/data/company";
 import { projects } from "@/data/projects";
-import { placeholderGradient } from "@/lib/projectPlaceholder";
 import MapPinCircle from "@/components/ui/MapPinCircle";
 
 const BRAND_RED = "#E30613";
@@ -91,8 +89,6 @@ export default function SriLankaMapPins() {
   const svgRef = useRef<SVGSVGElement>(null);
   const [zoom, setZoom] = useState(MIN_ZOOM);
   const [origin, setOrigin] = useState(DEFAULT_ORIGIN);
-  const [activeProject, setActiveProject] = useState<string | null>(null);
-  const [activeFiller, setActiveFiller] = useState<string | null>(null);
   const dragState = useRef<{ startX: number; startY: number; origin: { x: number; y: number } } | null>(null);
   const [isDragging, setIsDragging] = useState(false);
 
@@ -176,19 +172,6 @@ export default function SriLankaMapPins() {
   const pinScale = PIN_BASE_SCALE / zoom;
 
   const showPins = zoom >= CLUSTER_ZOOM_THRESHOLD;
-
-  function toScreenPercent(mapX: number, mapY: number) {
-    return {
-      left: `${((CENTER.x + zoom * (mapX - origin.x)) / VB_WIDTH) * 100}%`,
-      top: `${((CENTER.y + zoom * (mapY - origin.y)) / VB_HEIGHT) * 100}%`,
-    };
-  }
-
-  const active = projects.find((p) => p.slug === activeProject);
-  const activeTooltipPos = active ? toScreenPercent(active.mapX, active.mapY) : null;
-
-  const activeFillerPin = fillerPins.find((p) => p.id === activeFiller);
-  const activeFillerTooltipPos = activeFillerPin ? toScreenPercent(activeFillerPin.mapX, activeFillerPin.mapY) : null;
 
   return (
     <div>
@@ -274,15 +257,6 @@ export default function SriLankaMapPins() {
                 <g
                   key={project.slug}
                   transform={`translate(${project.mapX} ${project.mapY}) scale(${pinScale})`}
-                  className="cursor-pointer"
-                  onMouseEnter={() => setActiveProject(project.slug)}
-                  onMouseLeave={() => setActiveProject((cur) => (cur === project.slug ? null : cur))}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setActiveProject(project.slug);
-                  }}
-                  tabIndex={0}
-                  role="button"
                   aria-label={
                     project.capacity
                       ? `${project.client}, ${project.location}: ${project.capacity}`
@@ -300,16 +274,7 @@ export default function SriLankaMapPins() {
                 <g
                   key={pin.id}
                   transform={`translate(${pin.mapX} ${pin.mapY}) scale(${pinScale})`}
-                  className="cursor-pointer"
                   opacity={0.6}
-                  onMouseEnter={() => setActiveFiller(pin.id)}
-                  onMouseLeave={() => setActiveFiller((cur) => (cur === pin.id ? null : cur))}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setActiveFiller(pin.id);
-                  }}
-                  tabIndex={0}
-                  role="button"
                   aria-label={`Additional completed project in ${pin.district}`}
                 >
                   <g transform="translate(-9 -9)">
@@ -319,42 +284,6 @@ export default function SriLankaMapPins() {
               ))}
           </g>
         </svg>
-
-        {active && activeTooltipPos && (
-          <div
-            className="pointer-events-none absolute z-10 w-40 -translate-x-1/2 -translate-y-[calc(100%+10px)] overflow-hidden rounded-lg border border-brand-line bg-white shadow-[0_16px_32px_-12px_rgba(11,15,20,0.35)]"
-            style={activeTooltipPos}
-          >
-            {active.image ? (
-              <div className="relative aspect-[4/3]">
-                <Image src={active.image} alt="" fill sizes="160px" className="object-cover" />
-              </div>
-            ) : (
-              <div className="aspect-[4/3]" style={{ background: placeholderGradient(0) }} />
-            )}
-            <div className="p-2.5">
-              <p className="truncate text-[11px] font-bold text-brand-ink">{active.client}</p>
-              <p className="truncate text-[10px] text-brand-muted">{active.location}</p>
-              {active.capacity && (
-                <p className="mt-1 flex items-center gap-1 text-[10px] font-semibold text-brand-red">
-                  <Zap size={10} />
-                  {active.capacity}
-                </p>
-              )}
-            </div>
-            <span className="absolute left-1/2 top-full h-2.5 w-2.5 -translate-x-1/2 -translate-y-1/2 rotate-45 border-b border-r border-brand-line bg-white" />
-          </div>
-        )}
-
-        {activeFillerPin && activeFillerTooltipPos && (
-          <div
-            className="pointer-events-none absolute z-10 -translate-x-1/2 -translate-y-[calc(100%+8px)] whitespace-nowrap rounded-md border border-brand-line bg-white px-3 py-1.5 shadow-[0_10px_24px_-10px_rgba(11,15,20,0.35)]"
-            style={activeFillerTooltipPos}
-          >
-            <p className="text-[10px] font-semibold text-brand-ink">Completed project</p>
-            <p className="text-[10px] text-brand-muted">{activeFillerPin.district} District</p>
-          </div>
-        )}
 
         <div className="absolute right-3 top-3 flex flex-col gap-1.5">
           <button
@@ -388,7 +317,7 @@ export default function SriLankaMapPins() {
 
       <p className="mt-3 text-center text-xs text-brand-muted">
         {showPins
-          ? "Drag to pan, scroll or use +/- to zoom further, hover a pin for project details."
+          ? "Each pin marks a completed project. Drag to pan, scroll or use +/- to zoom further."
           : "Each badge shows completed projects per district — scroll, use +, or click a district to zoom in and see them."}
       </p>
     </div>
