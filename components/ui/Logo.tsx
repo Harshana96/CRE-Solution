@@ -11,32 +11,58 @@ export default function Logo({
   tone = "dark",
   showTagline = true,
   size = 44,
+  expandedSize,
+  expanded = false,
 }: {
   tone?: "dark" | "light";
   showTagline?: boolean;
-  /** Logo mark size in pixels (the chip/image is square). */
+  /** Logo mark size in pixels (the chip/image is square). This is also the
+   * space reserved in normal layout flow when `expandedSize` is set. */
   size?: number;
+  /**
+   * When set, the logo mark floats at this larger size (absolutely
+   * positioned, so it doesn't grow the header/row it sits in) while
+   * `expanded` is true, and smoothly shrinks down to `size` when it's
+   * false — e.g. a big logo over the hero that docks to nav size on scroll.
+   */
+  expandedSize?: number;
+  expanded?: boolean;
 }) {
   const isLight = tone === "light";
+  const isFloating = expandedSize !== undefined;
+  const chipSize = isFloating ? (expanded ? expandedSize : size) : size;
+
+  const chip = (
+    <span
+      className={cn(
+        "flex items-center justify-center rounded-lg",
+        isLight && "bg-white p-1 shadow-sm",
+        isFloating
+          ? "absolute left-0 top-1/2 -translate-y-1/2 transition-[width,height] duration-500 ease-out"
+          : "relative flex-none"
+      )}
+      style={{ height: chipSize, width: chipSize }}
+    >
+      <Image
+        src="/logo/cre-logo.png"
+        alt="CRE Solutions (Pvt) Ltd"
+        width={200}
+        height={200}
+        priority
+        className="h-full w-full object-contain"
+      />
+    </span>
+  );
 
   return (
     <Link href="/" className="flex items-center gap-3">
-      <span
-        className={cn(
-          "relative flex flex-none items-center justify-center rounded-lg",
-          isLight && "bg-white p-1 shadow-sm"
-        )}
-        style={{ height: size, width: size }}
-      >
-        <Image
-          src="/logo/cre-logo.png"
-          alt="CRE Solutions (Pvt) Ltd"
-          width={160}
-          height={160}
-          priority
-          className="h-full w-full object-contain"
-        />
-      </span>
+      {isFloating ? (
+        <span className="relative flex-none" style={{ height: size, width: size }}>
+          {chip}
+        </span>
+      ) : (
+        chip
+      )}
       {showTagline && (
         <span
           className={cn(
