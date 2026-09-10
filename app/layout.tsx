@@ -53,7 +53,15 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       lang="en"
       className={`${manrope.variable} ${plexSans.variable} h-full antialiased`}
     >
-      <body className="flex min-h-full flex-col bg-white text-brand-ink">
+      {/* suppressHydrationWarning: browser extensions (e.g. Grammarly) inject
+          data-gr-* attributes onto <body> before React hydrates, which
+          otherwise trips a false-positive hydration mismatch — not caused
+          by our app. This only suppresses warnings for attribute diffs on
+          this exact element, not the rest of the tree. */}
+      <body
+        className="flex min-h-full flex-col bg-white text-brand-ink"
+        suppressHydrationWarning
+      >
         <Header />
         <main className="flex-1">{children}</main>
         <Footer />
