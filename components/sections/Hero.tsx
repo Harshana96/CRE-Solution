@@ -19,13 +19,15 @@ export default function Hero() {
         sizes="100vw"
         className="object-cover"
       />
-      {/* Dark/red overlay for text legibility and brand tone over the photo */}
+      {/* Overlay: lighter overall (so the photo — and the logo sitting over
+          the top-left corner of it — actually reads), with a focused darker
+          "spotlight" behind the headline/body text area only, for legibility. */}
       <div
         aria-hidden
         className="absolute inset-0"
         style={{
           background:
-            "radial-gradient(1200px 500px at 85% 0%, rgba(227,6,19,0.22), transparent 60%), linear-gradient(200deg, rgba(5,7,10,0.94) 0%, rgba(11,15,20,0.88) 45%, rgba(23,29,36,0.82) 100%)",
+            "radial-gradient(1200px 500px at 85% 0%, rgba(227,6,19,0.18), transparent 60%), radial-gradient(1000px 560px at 26% 58%, rgba(5,7,10,0.8), transparent 68%), linear-gradient(200deg, rgba(6,8,11,0.5) 0%, rgba(10,13,17,0.4) 45%, rgba(18,23,28,0.32) 100%)",
         }}
       />
 
