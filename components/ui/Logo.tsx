@@ -2,11 +2,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 
-// Real CRE Solutions logo (client-supplied, /public/logo/cre-logo.png). It
-// already bakes in the "CRE SOLUTIONS (PVT) LTD" wordmark, so the tagline
-// (where shown) is added alongside it separately. The logo's black text
-// needs a light backing to stay legible over the dark transparent hero
-// header — hence the white chip in the `light` tone.
+// Real CRE Solutions logo (client-supplied, /public/logo/cre-logo.png,
+// transparent background). Rendered with no backing chip — client asked for
+// the white box behind it removed. It already bakes in the "CRE SOLUTIONS
+// (PVT) LTD" wordmark, so the tagline (where shown) is added separately.
 export default function Logo({
   tone = "dark",
   showTagline = true,
@@ -24,6 +23,8 @@ export default function Logo({
    * positioned, so it doesn't grow the header/row it sits in) while
    * `expanded` is true, and smoothly shrinks down to `size` when it's
    * false — e.g. a big logo over the hero that docks to nav size on scroll.
+   * Anchored at its top edge (not vertically centered) so growing larger
+   * only extends downward, never clipping against the viewport's top edge.
    */
   expandedSize?: number;
   expanded?: boolean;
@@ -35,11 +36,8 @@ export default function Logo({
   const chip = (
     <span
       className={cn(
-        "flex items-center justify-center rounded-lg",
-        isLight && "bg-white p-1 shadow-sm",
-        isFloating
-          ? "absolute left-0 top-1/2 -translate-y-1/2 transition-[width,height] duration-500 ease-out"
-          : "relative flex-none"
+        "flex items-center justify-center",
+        isFloating ? "absolute left-0 top-0 transition-[width,height] duration-500 ease-out" : "relative flex-none"
       )}
       style={{ height: chipSize, width: chipSize }}
     >
