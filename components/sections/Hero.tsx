@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import Container from "@/components/ui/Container";
@@ -9,22 +10,22 @@ import { company } from "@/data/company";
 export default function Hero() {
   return (
     <section className="relative isolate flex min-h-[92vh] items-center overflow-hidden bg-brand-ink pt-24 text-white">
-      {/* Decorative solar-panel-grid graphic, standing in for hero photography */}
+      {/* Cover photo: rooftop solar installation */}
+      <Image
+        src="/images/hero/rooftop-solar.jpg"
+        alt=""
+        fill
+        priority
+        sizes="100vw"
+        className="object-cover"
+      />
+      {/* Dark/red overlay for text legibility and brand tone over the photo */}
       <div
         aria-hidden
         className="absolute inset-0"
         style={{
           background:
-            "radial-gradient(1200px 500px at 85% 0%, rgba(227,6,19,0.16), transparent 60%), linear-gradient(200deg, #05070a 0%, #0b0f14 45%, #171d24 100%)",
-        }}
-      />
-      <div
-        aria-hidden
-        className="absolute -right-[10%] bottom-[-8%] h-[70%] w-[65%] -skew-y-6 opacity-90"
-        style={{
-          backgroundImage:
-            "repeating-linear-gradient(115deg, rgba(20,25,32,0.95) 0 46px, rgba(32,40,50,0.95) 46px 92px), repeating-linear-gradient(115deg, transparent 0 44px, rgba(255,255,255,0.08) 44px 46px), repeating-linear-gradient(25deg, transparent 0 22px, rgba(255,255,255,0.05) 22px 23px)",
-          maskImage: "linear-gradient(200deg, transparent 0%, #000 32%)",
+            "radial-gradient(1200px 500px at 85% 0%, rgba(227,6,19,0.22), transparent 60%), linear-gradient(200deg, rgba(5,7,10,0.94) 0%, rgba(11,15,20,0.88) 45%, rgba(23,29,36,0.82) 100%)",
         }}
       />
 
