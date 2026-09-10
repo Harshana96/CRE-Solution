@@ -34,8 +34,6 @@ export const company = {
 // guessed. `name` must match a district `name` in data/sriLankaDistricts.ts
 // so <SriLankaMap> can colorize the correct real district shape.
 export const reachRegions = [
-  { name: "Jaffna", count: "2+", category: "electrical" },
-  { name: "Mannar", count: "1+", category: "offgrid" },
   { name: "Trincomalee", count: "10+", category: "solar" },
   { name: "Anuradhapura", count: "15+", category: "solar" },
   { name: "Polonnaruwa", count: "5+", category: "offgrid" },
@@ -45,9 +43,6 @@ export const reachRegions = [
   { name: "Kegalle", count: "5+", category: "offgrid" },
   { name: "Gampaha", count: "15+", category: "solar" },
   { name: "Colombo", count: "15+", category: "electrical" },
-  { name: "Badulla", count: "3+", category: "offgrid" },
-  { name: "Galle", count: "3+", category: "solar" },
-  { name: "Matara", count: "2+", category: "ev" },
 ] as const;
 
 // Negombo is a city within Gampaha District rather than a district of its
