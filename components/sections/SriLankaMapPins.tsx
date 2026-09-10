@@ -283,7 +283,11 @@ export default function SriLankaMapPins() {
                   }}
                   tabIndex={0}
                   role="button"
-                  aria-label={`${project.client}, ${project.location}: ${project.capacity}`}
+                  aria-label={
+                    project.capacity
+                      ? `${project.client}, ${project.location}: ${project.capacity}`
+                      : `${project.client}, ${project.location}`
+                  }
                 >
                   <g transform="translate(-12 -12)">
                     <MapPinCircle size={24} id={project.slug} />
@@ -331,10 +335,12 @@ export default function SriLankaMapPins() {
             <div className="p-2.5">
               <p className="truncate text-[11px] font-bold text-brand-ink">{active.client}</p>
               <p className="truncate text-[10px] text-brand-muted">{active.location}</p>
-              <p className="mt-1 flex items-center gap-1 text-[10px] font-semibold text-brand-red">
-                <Zap size={10} />
-                {active.capacity}
-              </p>
+              {active.capacity && (
+                <p className="mt-1 flex items-center gap-1 text-[10px] font-semibold text-brand-red">
+                  <Zap size={10} />
+                  {active.capacity}
+                </p>
+              )}
             </div>
             <span className="absolute left-1/2 top-full h-2.5 w-2.5 -translate-x-1/2 -translate-y-1/2 rotate-45 border-b border-r border-brand-line bg-white" />
           </div>

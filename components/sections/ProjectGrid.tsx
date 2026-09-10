@@ -18,7 +18,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
         {project.image ? (
           <Image
             src={project.image}
-            alt={`${project.client}, ${project.location} — ${project.capacity}`}
+            alt={`${project.client}, ${project.location}`}
             fill
             sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
             className="object-cover transition-transform duration-300 group-hover:scale-105"
@@ -43,10 +43,12 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
           <MapPin size={13} className="text-brand-red" />
           {project.location}
         </div>
-        <div className="mt-3 flex items-start gap-1.5 text-sm font-semibold text-brand-ink">
-          <Zap size={14} className="mt-0.5 flex-none text-brand-red" />
-          {project.capacity}
-        </div>
+        {project.capacity && (
+          <div className="mt-3 flex items-start gap-1.5 text-sm font-semibold text-brand-ink">
+            <Zap size={14} className="mt-0.5 flex-none text-brand-red" />
+            {project.capacity}
+          </div>
+        )}
         <p className="mt-3 text-xs leading-relaxed text-brand-muted">{project.description}</p>
       </div>
     </Reveal>
