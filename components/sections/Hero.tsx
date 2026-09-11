@@ -10,10 +10,13 @@ import { company } from "@/data/company";
 export default function Hero() {
   return (
     <section className="relative isolate flex min-h-[92vh] items-center overflow-hidden bg-brand-light pt-24 text-brand-ink">
-      {/* Cover photo, washed light (not darkened) so it stays airy and the
-          dark headline/body text and logo above it both stay legible. */}
+      {/* Real CRE Solutions installation (Mr. Kamal, Dambokka, Kurunegala —
+          see data/projects.ts), not stock photography, so the hero actually
+          represents the company's own work. Washed light (not darkened) so
+          it stays airy and the dark headline/body text and logo above it
+          both stay legible. */}
       <Image
-        src="/images/hero/rooftop-solar.jpg"
+        src="/images/hero/cre-installation-kurunegala.jpg"
         alt=""
         fill
         priority
