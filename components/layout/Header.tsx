@@ -30,24 +30,27 @@ export default function Header() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const transparent = isHome && !scrolled;
+  // The homepage hero is a light background, same as the header's own
+  // solid state, so nav text/logo no longer need a separate light-on-dark
+  // treatment — only the header's own background/shadow changes on scroll.
+  const atHeroTop = isHome && !scrolled;
 
   return (
     <header
       className={cn(
         "fixed inset-x-0 top-0 z-50 transition-all duration-300",
-        transparent
+        atHeroTop
           ? "bg-transparent py-5"
           : "bg-white/95 py-3 shadow-[0_1px_0_var(--color-brand-line)] backdrop-blur"
       )}
     >
       <div className="container-cre flex items-center justify-between">
         <Logo
-          tone={transparent ? "light" : "dark"}
+          tone="dark"
           showTagline={false}
           size={56}
           expandedSize={168}
-          expanded={transparent}
+          expanded={atHeroTop}
         />
 
         <nav className="hidden items-center gap-8 lg:flex">
@@ -55,12 +58,7 @@ export default function Header() {
             <Link
               key={item.href}
               href={item.href}
-              className={cn(
-                "text-sm font-semibold tracking-wide transition-colors",
-                transparent
-                  ? "text-white/85 hover:text-white"
-                  : "text-brand-ink hover:text-brand-red"
-              )}
+              className="text-sm font-semibold tracking-wide text-brand-ink transition-colors hover:text-brand-red"
             >
               {item.label}
             </Link>
@@ -73,7 +71,7 @@ export default function Header() {
           </Button>
         </div>
 
-        <MobileMenu transparent={transparent} />
+        <MobileMenu />
       </div>
     </header>
   );

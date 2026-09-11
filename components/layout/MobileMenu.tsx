@@ -8,7 +8,7 @@ import { navItems } from "@/components/layout/Header";
 import Button from "@/components/ui/Button";
 import { cn } from "@/lib/utils";
 
-export default function MobileMenu({ transparent }: { transparent: boolean }) {
+export default function MobileMenu() {
   const [open, setOpen] = useState(false);
   // `document` exists on both server and client, so `typeof document !==
   // "undefined"` is true on the client's very first (hydration) render —
@@ -74,10 +74,7 @@ export default function MobileMenu({ transparent }: { transparent: boolean }) {
         aria-label={open ? "Close menu" : "Open menu"}
         aria-expanded={open}
         onClick={() => setOpen((v) => !v)}
-        className={cn(
-          "flex h-10 w-10 items-center justify-center rounded-md transition-colors",
-          transparent ? "text-white" : "text-brand-ink"
-        )}
+        className="flex h-10 w-10 items-center justify-center rounded-md text-brand-ink transition-colors"
       >
         {open ? <X size={26} /> : <Menu size={26} />}
       </button>
