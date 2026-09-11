@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import Container from "@/components/ui/Container";
@@ -9,6 +10,25 @@ import { company } from "@/data/company";
 export default function Hero() {
   return (
     <section className="relative isolate flex min-h-[92vh] items-center overflow-hidden bg-brand-light pt-24 text-brand-ink">
+      {/* Cover photo, washed light (not darkened) so it stays airy and the
+          dark headline/body text and logo above it both stay legible. */}
+      <Image
+        src="/images/hero/rooftop-solar.jpg"
+        alt=""
+        fill
+        priority
+        sizes="100vw"
+        className="object-cover"
+      />
+      <div
+        aria-hidden
+        className="absolute inset-0"
+        style={{
+          background:
+            "linear-gradient(180deg, rgba(245,247,248,0.92) 0%, rgba(245,247,248,0.8) 38%, rgba(245,247,248,0.62) 100%)",
+        }}
+      />
+
       <Container className="relative z-10 py-24">
         <motion.div
           initial={{ opacity: 0, y: 18 }}
