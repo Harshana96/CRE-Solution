@@ -48,6 +48,12 @@ export default function IconPop({
           delay: reduceMotion ? 0 : delay,
         },
       }}
+      whileHover={
+        reduceMotion
+          ? undefined
+          : { scale: 1.15, rotate: -8, transition: { type: "spring", stiffness: 320, damping: 12 } }
+      }
+      whileTap={reduceMotion ? undefined : { scale: 0.92 }}
     >
       {children}
     </motion.div>
