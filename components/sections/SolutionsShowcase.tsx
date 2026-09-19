@@ -44,18 +44,26 @@ export default function SolutionsShowcase() {
             const Icon = iconMap[solution.icon];
 
             return (
-              <Reveal key={solution.slug} delay={i * 0.06} className="h-full min-h-0">
-                <motion.div
-                  layout
-                  onMouseEnter={() => setOpenIndex(i)}
-                  onClick={() => setOpenIndex((cur) => (cur === i ? null : i))}
-                  animate={{
-                    flexGrow: isOpen ? 6 : 1,
-                    flexBasis: isOpen ? "46%" : anyOpen ? "12%" : "25%",
-                  }}
-                  transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-                  className="group relative h-full min-w-0 cursor-pointer overflow-hidden rounded-xl bg-brand-ink"
-                >
+              // Not wrapped in <Reveal> here: flex-grow/flex-basis must be
+              // set on the element that's a direct child of the flex row
+              // below. Reveal renders its own wrapper div around children,
+              // which would become that direct child instead of this
+              // motion.div — the animation would then target an element
+              // with no actual effect on layout, and every tile would
+              // collapse to zero width (its only content is absolutely
+              // positioned).
+              <motion.div
+                key={solution.slug}
+                layout
+                onMouseEnter={() => setOpenIndex(i)}
+                onClick={() => setOpenIndex((cur) => (cur === i ? null : i))}
+                animate={{
+                  flexGrow: isOpen ? 6 : 1,
+                  flexBasis: isOpen ? "46%" : anyOpen ? "12%" : "25%",
+                }}
+                transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                className="group relative h-full min-w-0 cursor-pointer overflow-hidden rounded-xl bg-brand-ink"
+              >
                   {solution.image ? (
                     <Image
                       src={solution.image}
@@ -150,7 +158,6 @@ export default function SolutionsShowcase() {
                     </button>
                   </motion.div>
                 </motion.div>
-              </Reveal>
             );
           })}
         </div>
