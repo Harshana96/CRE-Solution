@@ -34,8 +34,19 @@ const LOGO_BY_NAME: Record<string, string> = {
   Kelani: "/logo/brands/kelani.png",
 };
 
+// Client-supplied product photos, one real photo per brand (not shared
+// across brands — a brand with no entry here has no photo yet).
+const IMAGE_BY_NAME: Record<string, string> = {
+  GoodWe: "/products/goodwe-3kw.jpg",
+  Solis: "/products/solis.jpg",
+};
+
 function brand(name: string): TechnologyBrand {
-  return { name, logo: LOGO_BY_NAME[name] ?? null, image: null };
+  return {
+    name,
+    logo: LOGO_BY_NAME[name] ?? null,
+    image: IMAGE_BY_NAME[name] ?? null,
+  };
 }
 
 export const technologyBrandGroups = [
