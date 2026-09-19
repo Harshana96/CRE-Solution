@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { motion } from "framer-motion";
 import Container from "@/components/ui/Container";
 import SectionHeading from "@/components/ui/SectionHeading";
@@ -12,8 +13,8 @@ import { cn } from "@/lib/utils";
 // takes to trace itself. The connecting line's duration/start are derived
 // from these so its leading edge reaches each circle exactly as that
 // circle begins drawing — see the `lineDuration`/`lineDelay` comment below.
-const STEP_DELAY = 0.45;
-const CIRCLE_DRAW_DURATION = 0.35;
+const STEP_DELAY = 0.4;
+const CIRCLE_DRAW_DURATION = 0.32;
 
 export default function EngineeringProcess({
   tone = "dark",
@@ -28,13 +29,33 @@ export default function EngineeringProcess({
   const stepCount = engineeringProcess.length;
   // Line starts just after circle 1 begins, and finishes exactly as the
   // last circle begins — so its progress always matches the circle it's
-  // currently passing under.
+  // currently passing under. Only meaningful on the xl single-row layout.
   const lineDelay = STEP_DELAY * 0.3;
   const lineDuration = STEP_DELAY * (stepCount - 1);
 
   return (
-    <section className={cn("py-24", isDark ? "bg-brand-ink" : "bg-brand-light")}>
-      <Container>
+    <section className={cn("relative overflow-hidden py-24", isDark ? "bg-brand-ink" : "bg-brand-light")}>
+      {isDark && (
+        <>
+          <Image
+            src="/images/hero/cre-installation-kurunegala.jpg"
+            alt=""
+            fill
+            sizes="100vw"
+            className="object-cover opacity-25"
+          />
+          <div
+            aria-hidden
+            className="absolute inset-0"
+            style={{
+              background:
+                "linear-gradient(180deg, rgba(11,15,20,0.92) 0%, rgba(11,15,20,0.88) 50%, rgba(11,15,20,0.95) 100%)",
+            }}
+          />
+        </>
+      )}
+
+      <Container className="relative z-10">
         <Reveal>
           <SectionHeading
             eyebrow="Our Engineering Process"
@@ -42,21 +63,21 @@ export default function EngineeringProcess({
             description={
               compact
                 ? undefined
-                : "A fixed six-stage sequence, followed for every project regardless of scale."
+                : "A fixed eight-stage sequence, followed for every project regardless of scale."
             }
             tone={isDark ? "light" : "dark"}
           />
         </Reveal>
 
         <div
-          className="relative mt-14 grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-6"
+          className="relative mt-14 grid grid-cols-2 gap-x-5 gap-y-10 sm:grid-cols-4 xl:grid-cols-8"
           onMouseEnter={() => setHovered(true)}
           onMouseLeave={() => setHovered(false)}
         >
           <motion.div
             aria-hidden
             className={cn(
-              "absolute left-0 right-0 top-[26px] hidden h-px origin-left lg:block",
+              "absolute left-0 right-0 top-[26px] hidden h-px origin-left xl:block",
               isDark ? "bg-white/20" : "bg-brand-red/40"
             )}
             initial={false}

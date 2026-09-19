@@ -1,6 +1,7 @@
-// Source: CRE_Solutions_Portfolio.pdf — "Trusted Technology & Engineering" page.
-// These are brands presented in the client portfolio. CRE Solutions is NOT
-// described in the source document as an official distributor, authorized
+// Source: CRE_Solutions_Portfolio.pdf — "Trusted Technology & Engineering" page,
+// plus Wiring/Aluminum/Surge Protection added directly by the client
+// (Website changes.pdf). These are brands CRE Solutions works with —
+// CRE Solutions is NOT described as an official distributor, authorized
 // dealer, partner or certified installer of any of these brands — do not add
 // that language in copy that references this data.
 
@@ -24,6 +25,21 @@ export const technologyBrandGroups = [
     category: "EV Charging Solutions",
     tagline: "Powering cleaner mobility.",
     brands: ["BENNY"],
+  },
+  {
+    category: "Wiring",
+    tagline: "Safe, certified cabling for every installation.",
+    brands: ["Kelani", "KBE", "LAPP"],
+  },
+  {
+    category: "Aluminum",
+    tagline: "Durable mounting and structural components.",
+    brands: ["Lanka Aluminium", "Swistech"],
+  },
+  {
+    category: "Surge Protection",
+    tagline: "Protecting systems from electrical surges.",
+    brands: ["Schneider", "ZBENY"],
   },
 ] as const;
 

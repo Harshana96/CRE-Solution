@@ -17,6 +17,11 @@ export interface Solution {
   heroSubline: string;
   features: string[];
   applications: { title: string; description: string }[];
+  /** Real project photo for the dark-tile solutions grid on the homepage.
+   * `null` where no real photo of that specific work exists yet (EV
+   * charging — none of the client's supplied project photos show a
+   * charger) rather than using an unrelated stand-in. */
+  image: string | null;
 }
 
 export const solutions: Solution[] = [
@@ -47,6 +52,7 @@ export const solutions: Solution[] = [
           "Larger-scale on-grid and hybrid installations engineered for industrial facilities and high-consumption sites.",
       },
     ],
+    image: "/images/solutions/solar-pv-tile.jpg",
   },
   {
     slug: "energy-storage",
@@ -79,6 +85,7 @@ export const solutions: Solution[] = [
           "Battery storage paired with hybrid inverters for continuous power during grid outages.",
       },
     ],
+    image: "/images/solutions/energy-storage-tile.jpg",
   },
   {
     slug: "ev-charging",
@@ -105,6 +112,7 @@ export const solutions: Solution[] = [
         description: "DC fast chargers (30 / 40 / 60 kW) and 120 kW dual-gun units for commercial sites.",
       },
     ],
+    image: null,
   },
   {
     slug: "electrical",
@@ -136,6 +144,7 @@ export const solutions: Solution[] = [
         description: "Electrical engineering solutions for industrial facilities, including CEB/LECO documentation.",
       },
     ],
+    image: "/images/solutions/electrical-tile.jpg",
   },
 ];
 
@@ -146,4 +155,6 @@ export const engineeringProcess = [
   { number: "04", title: "Installation", description: "Professional execution." },
   { number: "05", title: "Testing & Commissioning", description: "Safe and reliable operation." },
   { number: "06", title: "Monitoring & Support", description: "Long-term performance." },
+  { number: "07", title: "Site Service", description: "On-site support when you need it." },
+  { number: "08", title: "Maintenance", description: "Scheduled upkeep for lasting performance." },
 ] as const;

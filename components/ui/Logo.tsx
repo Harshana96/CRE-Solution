@@ -12,6 +12,7 @@ export default function Logo({
   size = 44,
   expandedSize,
   expanded = false,
+  glow = false,
 }: {
   tone?: "dark" | "light";
   showTagline?: boolean;
@@ -28,6 +29,12 @@ export default function Logo({
    */
   expandedSize?: number;
   expanded?: boolean;
+  /**
+   * Soft white glow behind the mark — without the old white backing chip,
+   * the logo's black text has low contrast on a dark background (e.g. the
+   * footer). A glow keeps it visible without reintroducing a solid box.
+   */
+  glow?: boolean;
 }) {
   const isLight = tone === "light";
   const isFloating = expandedSize !== undefined;
@@ -48,6 +55,11 @@ export default function Logo({
         height={200}
         priority
         className="h-full w-full object-contain"
+        style={
+          glow
+            ? { filter: "drop-shadow(0 0 10px rgba(255,255,255,0.85)) drop-shadow(0 0 2px rgba(255,255,255,0.9))" }
+            : undefined
+        }
       />
     </span>
   );

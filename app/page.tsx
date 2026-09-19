@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import Hero from "@/components/sections/Hero";
 import Stats from "@/components/sections/Stats";
-import SolutionsGrid from "@/components/sections/SolutionsGrid";
-import EngineeringProcess from "@/components/sections/EngineeringProcess";
+import SolutionsShowcase from "@/components/sections/SolutionsShowcase";
 import WhyChooseUs from "@/components/sections/WhyChooseUs";
+import EngineeringProcess from "@/components/sections/EngineeringProcess";
 import ProjectGrid from "@/components/sections/ProjectGrid";
 import SriLankaReach from "@/components/sections/SriLankaReach";
 import ContactCTA from "@/components/sections/ContactCTA";
@@ -24,32 +24,9 @@ export default function HomePage() {
       <Hero />
       <Stats tone="light" />
 
-      <section className="bg-white py-24">
-        <Container>
-          <div className="grid grid-cols-1 gap-12 lg:grid-cols-2 lg:items-center">
-            <SectionHeading
-              eyebrow="About CRE Solutions"
-              title={company.reachStatement}
-              description={company.description}
-            />
-            <div className="rounded-xl border border-brand-line bg-brand-light p-8">
-              <p className="text-sm font-bold uppercase tracking-widest text-brand-red">
-                Our Mission
-              </p>
-              <p className="mt-2 text-brand-ink">{company.mission}</p>
-              <div className="my-6 h-px bg-brand-line" />
-              <p className="text-sm font-bold uppercase tracking-widest text-brand-red">
-                Our Vision
-              </p>
-              <p className="mt-2 text-brand-ink">{company.vision}</p>
-            </div>
-          </div>
-        </Container>
-      </section>
-
-      <SolutionsGrid />
-      <EngineeringProcess tone="dark" />
+      <SolutionsShowcase />
       <WhyChooseUs compact />
+      <EngineeringProcess tone="dark" />
 
       <section className="bg-white py-24">
         <Container>
