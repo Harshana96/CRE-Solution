@@ -83,18 +83,19 @@ export default function EngineeringProcess({
                     alt=""
                     fill
                     sizes="(min-width: 1280px) 12vw, (min-width: 640px) 25vw, 50vw"
-                    className="object-cover opacity-30 transition-transform duration-500 ease-out group-hover:scale-110 group-hover:opacity-50"
+                    className="object-cover opacity-70 transition-transform duration-500 ease-out group-hover:scale-110 group-hover:opacity-90"
                   />
                   {/* Uniform dark-red brand wash over every tile, so eight
                       differently-coloured real project photos read as one
-                      cohesive strip instead of clashing side by side. */}
+                      cohesive strip instead of clashing side by side —
+                      light enough that the photo itself stays visible. */}
                   <div
                     aria-hidden
-                    className="absolute inset-0 bg-gradient-to-b from-brand-ink/70 via-brand-ink/85 to-brand-ink/95"
+                    className="absolute inset-0 bg-gradient-to-t from-brand-ink/90 via-brand-ink/35 to-brand-ink/10"
                   />
                   <div
                     aria-hidden
-                    className="absolute inset-0 bg-gradient-to-br from-brand-red/20 via-transparent to-transparent opacity-60 transition-opacity duration-500 group-hover:opacity-90"
+                    className="absolute inset-0 bg-gradient-to-br from-brand-red/25 via-transparent to-transparent opacity-50 transition-opacity duration-500 group-hover:opacity-70"
                   />
                   <div
                     aria-hidden
