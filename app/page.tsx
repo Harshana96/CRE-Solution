@@ -9,6 +9,7 @@ import SriLankaReach from "@/components/sections/SriLankaReach";
 import ContactCTA from "@/components/sections/ContactCTA";
 import Container from "@/components/ui/Container";
 import SectionHeading from "@/components/ui/SectionHeading";
+import Reveal from "@/components/ui/Reveal";
 import Button from "@/components/ui/Button";
 import { company } from "@/data/company";
 
@@ -30,7 +31,7 @@ export default function HomePage() {
 
       <section className="bg-white py-24">
         <Container>
-          <div className="flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-end">
+          <Reveal className="flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-end">
             <SectionHeading
               eyebrow="Our Works Speak For Us"
               title="Recent installations"
@@ -39,7 +40,7 @@ export default function HomePage() {
             <Button href="/projects" variant="outline-dark" className="shrink-0">
               View All Projects
             </Button>
-          </div>
+          </Reveal>
           <div className="mt-12">
             <ProjectGrid limit={4} />
           </div>

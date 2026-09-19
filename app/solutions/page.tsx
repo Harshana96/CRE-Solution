@@ -5,6 +5,7 @@ import PageHero from "@/components/sections/PageHero";
 import ContactCTA from "@/components/sections/ContactCTA";
 import Container from "@/components/ui/Container";
 import Button from "@/components/ui/Button";
+import Reveal from "@/components/ui/Reveal";
 import IconPop from "@/components/ui/IconPop";
 import { solutions } from "@/data/solutions";
 
@@ -39,8 +40,9 @@ export default function SolutionsOverviewPage() {
             {solutions.map((solution, i) => {
               const Icon = iconMap[solution.icon];
               return (
-                <div
+                <Reveal
                   key={solution.slug}
+                  delay={i * 0.08}
                   className="flex flex-col rounded-xl border border-brand-line bg-white p-9"
                 >
                   <div className="flex items-center justify-between">
@@ -68,12 +70,12 @@ export default function SolutionsOverviewPage() {
                     Explore {solution.shortTitle}
                     <ArrowUpRight size={16} />
                   </Link>
-                </div>
+                </Reveal>
               );
             })}
           </div>
 
-          <div className="mt-16 flex flex-col items-center gap-5 rounded-xl bg-brand-ink px-8 py-14 text-center">
+          <Reveal className="mt-16 flex flex-col items-center gap-5 rounded-xl bg-brand-ink px-8 py-14 text-center">
             <h2 className="max-w-xl font-heading text-2xl font-extrabold text-white sm:text-3xl">
               Find the Right Energy Solution
             </h2>
@@ -85,7 +87,7 @@ export default function SolutionsOverviewPage() {
             <Button href="/contact" variant="primary">
               Get a Quote
             </Button>
-          </div>
+          </Reveal>
         </Container>
       </section>
 
