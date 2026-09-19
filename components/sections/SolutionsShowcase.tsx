@@ -2,7 +2,8 @@
 
 import { useState, type FormEvent } from "react";
 import Image from "next/image";
-import { X, Sun, BatteryCharging, PlugZap, Zap, Check, Mail } from "lucide-react";
+import { motion } from "framer-motion";
+import { X, Sun, BatteryCharging, PlugZap, Zap, Check, Mail, Phone, ArrowRight } from "lucide-react";
 import Container from "@/components/ui/Container";
 import SectionHeading from "@/components/ui/SectionHeading";
 import Reveal from "@/components/ui/Reveal";
@@ -13,7 +14,11 @@ import { company } from "@/data/company";
 const iconMap = { Sun, BatteryCharging, PlugZap, Zap };
 
 export default function SolutionsShowcase() {
-  const [active, setActive] = useState<Solution | null>(null);
+  // Popup is kept for future use (e.g. a fuller quote request) but is no
+  // longer opened by tapping a tile — only by the "Full Quote & Details"
+  // button inside the expanded tile below.
+  const [popupSolution, setPopupSolution] = useState<Solution | null>(null);
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   return (
     <section className="bg-white py-24">
@@ -26,23 +31,38 @@ export default function SolutionsShowcase() {
           />
         </Reveal>
 
-        <div className="mt-14 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        {/* Desktop/tablet: hover (or tap) one tile to expand it in place —
+            width only, so this needs the row layout and is skipped below lg
+            in favor of a simpler stacked list (see below). */}
+        <div
+          className="mt-14 hidden gap-4 lg:flex lg:h-[440px]"
+          onMouseLeave={() => setOpenIndex(null)}
+        >
           {solutions.map((solution, i) => {
+            const isOpen = openIndex === i;
+            const anyOpen = openIndex !== null;
             const Icon = iconMap[solution.icon];
+
             return (
-              <Reveal key={solution.slug} delay={i * 0.08}>
-                <button
-                  type="button"
-                  onClick={() => setActive(solution)}
-                  className="group relative flex h-full w-full flex-col justify-end overflow-hidden rounded-xl bg-brand-ink p-6 text-left aspect-[4/5] transition-transform duration-200 hover:-translate-y-1.5"
+              <Reveal key={solution.slug} delay={i * 0.06} className="h-full min-h-0">
+                <motion.div
+                  layout
+                  onMouseEnter={() => setOpenIndex(i)}
+                  onClick={() => setOpenIndex((cur) => (cur === i ? null : i))}
+                  animate={{
+                    flexGrow: isOpen ? 6 : 1,
+                    flexBasis: isOpen ? "46%" : anyOpen ? "12%" : "25%",
+                  }}
+                  transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                  className="group relative h-full min-w-0 cursor-pointer overflow-hidden rounded-xl bg-brand-ink"
                 >
                   {solution.image ? (
                     <Image
                       src={solution.image}
                       alt=""
                       fill
-                      sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
-                      className="object-cover opacity-55 transition-transform duration-500 group-hover:scale-110"
+                      sizes="(min-width: 1024px) 50vw, 100vw"
+                      className="object-cover opacity-50"
                     />
                   ) : (
                     <div
@@ -56,30 +76,140 @@ export default function SolutionsShowcase() {
                   )}
                   <div
                     aria-hidden
-                    className="absolute inset-0 bg-gradient-to-t from-brand-ink via-brand-ink/60 to-brand-ink/10"
+                    className="absolute inset-0 bg-gradient-to-t from-brand-ink via-brand-ink/70 to-brand-ink/20"
                   />
 
-                  <div className="relative z-10">
+                  {/* Collapsed content — icon + title, fades out as the tile opens */}
+                  <motion.div
+                    animate={{ opacity: isOpen ? 0 : 1 }}
+                    transition={{ duration: 0.25 }}
+                    className="pointer-events-none absolute inset-0 flex flex-col justify-end p-5"
+                  >
+                    <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-brand-red">
+                      <Icon size={20} className="text-white" />
+                    </div>
+                    <span className="mt-3 block text-[11px] font-bold uppercase tracking-widest text-brand-red">
+                      {solution.number}
+                    </span>
+                    <h3 className="mt-1 text-base font-bold leading-tight text-white">
+                      {solution.shortTitle}
+                    </h3>
+                  </motion.div>
+
+                  {/* Expanded content — service explanation + contact info */}
+                  <motion.div
+                    animate={{ opacity: isOpen ? 1 : 0 }}
+                    transition={{ duration: 0.3, delay: isOpen ? 0.15 : 0 }}
+                    className={`absolute inset-0 flex flex-col justify-end p-7 ${isOpen ? "" : "pointer-events-none"}`}
+                  >
                     <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-brand-red">
                       <Icon size={22} className="text-white" />
                     </div>
                     <span className="mt-4 block text-xs font-bold uppercase tracking-widest text-brand-red">
-                      {solution.number}
+                      Solution {solution.number}
                     </span>
-                    <h3 className="mt-1 text-xl font-bold text-white">{solution.title}</h3>
-                    <p className="mt-2 text-sm leading-relaxed text-white/70">{solution.summary}</p>
-                    <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-white underline decoration-brand-red decoration-2 underline-offset-4">
-                      View options
-                    </span>
-                  </div>
-                </button>
+                    <h3 className="mt-1 text-2xl font-bold text-white">{solution.title}</h3>
+                    <p className="mt-2 max-w-md text-sm leading-relaxed text-white/75">
+                      {solution.heroSubline}
+                    </p>
+
+                    <div className="mt-5 rounded-lg border border-white/15 bg-white/10 p-4 backdrop-blur-sm">
+                      <p className="text-[11px] font-bold uppercase tracking-widest text-white/60">
+                        Contact Information
+                      </p>
+                      <div className="mt-2 flex flex-wrap gap-x-5 gap-y-1.5">
+                        <a
+                          href={`tel:${contact.phones[0].replace(/\s/g, "")}`}
+                          onClick={(e) => e.stopPropagation()}
+                          className="flex items-center gap-1.5 text-sm font-semibold text-white hover:text-brand-red"
+                        >
+                          <Phone size={14} className="text-brand-red" />
+                          {contact.phones[0]}
+                        </a>
+                        <a
+                          href={`mailto:${contact.email}`}
+                          onClick={(e) => e.stopPropagation()}
+                          className="flex items-center gap-1.5 text-sm font-semibold text-white hover:text-brand-red"
+                        >
+                          <Mail size={14} className="text-brand-red" />
+                          {contact.email}
+                        </a>
+                      </div>
+                    </div>
+
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setPopupSolution(solution);
+                      }}
+                      className="mt-5 inline-flex w-fit items-center gap-1.5 text-sm font-semibold text-white underline decoration-brand-red decoration-2 underline-offset-4 hover:text-brand-red"
+                    >
+                      Full Quote &amp; Details
+                      <ArrowRight size={15} />
+                    </button>
+                  </motion.div>
+                </motion.div>
               </Reveal>
+            );
+          })}
+        </div>
+
+        {/* Mobile/small tablet: the hover-expand interaction needs real
+            screen width to make sense, so this is a simple static stack
+            instead — each links straight to the solution's full page. */}
+        <div className="mt-14 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:hidden">
+          {solutions.map((solution) => {
+            const Icon = iconMap[solution.icon];
+            return (
+              <a
+                key={solution.slug}
+                href={`/solutions/${solution.slug}`}
+                className="relative flex h-[200px] flex-col justify-end overflow-hidden rounded-xl bg-brand-ink p-5"
+              >
+                {solution.image ? (
+                  <Image
+                    src={solution.image}
+                    alt=""
+                    fill
+                    sizes="50vw"
+                    className="object-cover opacity-50"
+                  />
+                ) : (
+                  <div
+                    aria-hidden
+                    className="absolute inset-0 opacity-70"
+                    style={{
+                      backgroundImage:
+                        "repeating-linear-gradient(115deg, rgba(227,6,19,0.12) 0 44px, transparent 44px 88px)",
+                    }}
+                  />
+                )}
+                <div
+                  aria-hidden
+                  className="absolute inset-0 bg-gradient-to-t from-brand-ink via-brand-ink/70 to-brand-ink/20"
+                />
+                <div className="relative z-10">
+                  <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-brand-red">
+                    <Icon size={20} className="text-white" />
+                  </div>
+                  <span className="mt-3 block text-[11px] font-bold uppercase tracking-widest text-brand-red">
+                    {solution.number}
+                  </span>
+                  <h3 className="mt-1 text-base font-bold leading-tight text-white">{solution.title}</h3>
+                  <p className="mt-1.5 line-clamp-2 text-xs leading-relaxed text-white/70">
+                    {solution.summary}
+                  </p>
+                </div>
+              </a>
             );
           })}
         </div>
       </Container>
 
-      {active && <SolutionPopup solution={active} onClose={() => setActive(null)} />}
+      {popupSolution && (
+        <SolutionPopup solution={popupSolution} onClose={() => setPopupSolution(null)} />
+      )}
     </section>
   );
 }
