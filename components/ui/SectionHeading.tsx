@@ -1,3 +1,6 @@
+"use client";
+
+import { motion, useReducedMotion } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 interface SectionHeadingProps {
@@ -19,6 +22,7 @@ export default function SectionHeading({
 }: SectionHeadingProps) {
   const isCenter = align === "center";
   const isLight = tone === "light";
+  const reduceMotion = useReducedMotion();
 
   return (
     <div
@@ -35,7 +39,15 @@ export default function SectionHeading({
             isCenter && "justify-center"
           )}
         >
-          <span className="h-[3px] w-6 rounded-full bg-brand-red" />
+          {/* Draws in left-to-right the first time it scrolls into view —
+              the small red dash every section eyebrow uses site-wide. */}
+          <motion.span
+            className="h-[3px] w-6 origin-left rounded-full bg-brand-red"
+            initial={reduceMotion ? false : { scaleX: 0 }}
+            whileInView={{ scaleX: 1 }}
+            viewport={{ once: true, margin: "-40px" }}
+            transition={{ duration: 0.5, ease: "easeOut" }}
+          />
           {eyebrow}
         </div>
       )}

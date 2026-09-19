@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { BadgeCheck, AlertTriangle } from "lucide-react";
 import Container from "@/components/ui/Container";
+import SectionHeading from "@/components/ui/SectionHeading";
 import Reveal from "@/components/ui/Reveal";
 import { certifications, isSample } from "@/data/certifications";
 
@@ -22,16 +23,11 @@ export default function Certifications() {
 
         <div className="grid grid-cols-1 gap-10 md:grid-cols-[280px_1fr] md:gap-14">
           <Reveal>
-            <p className="text-xs font-bold uppercase tracking-[0.15em] text-brand-red">
-              Certifications &amp; Standards
-            </p>
-            <h2 className="mt-3 text-2xl font-extrabold text-brand-ink sm:text-3xl">
-              Backed by recognized standards
-            </h2>
-            <p className="mt-4 text-sm leading-relaxed text-brand-muted">
-              Certifications and accreditations will be listed here as they are
-              confirmed.
-            </p>
+            <SectionHeading
+              eyebrow="Certifications & Standards"
+              title="Backed by recognized standards"
+              description="Certifications and accreditations will be listed here as they are confirmed."
+            />
           </Reveal>
 
           <Reveal delay={0.08}>
