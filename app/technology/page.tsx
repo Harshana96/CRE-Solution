@@ -16,7 +16,15 @@ export default function TechnologyPage() {
       <PageHero
         eyebrow="Reliable Brands. Expert Solutions."
         title="Trusted Technology & Engineering"
-        description="A fixed six-stage engineering process — from site survey to long-term monitoring and support — applied to every project."
+        description="A fixed eight-stage engineering process — from site survey to long-term monitoring and support — applied to every project."
+        images={[
+          "/images/projects/dr-weerasinghe-kurunegala.jpg",
+          "/images/projects/dr-yamuna-kurunegala.jpg",
+          "/images/projects/mr-piyumal-kurunegala.jpg",
+          "/images/projects/mr-sampath-kurunegala.jpg",
+          "/images/projects/kiyoto-coffee-mathale.jpg",
+          "/images/projects/mr-janitha-just-computer-kurunegala.jpg",
+        ]}
       />
       <TechnologyBrands />
       <EngineeringProcess tone="dark" />

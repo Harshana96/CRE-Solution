@@ -9,11 +9,17 @@ interface PageHeroProps {
   title: string;
   description?: string;
   children?: ReactNode;
+  /**
+   * Photos to slide through behind this banner. Defaults to a general set
+   * of real CRE Solutions project photos — pass a different list per page
+   * (e.g. Technology, Why CRE) so each banner can show a different mix.
+   */
+  images?: string[];
 }
 
-// Real CRE Solutions project photos, shuffled behind every inner-page hero
-// band (see the rotation effect below) — not stock imagery.
-const ROTATING_IMAGES = [
+// Default rotation — real CRE Solutions project photos, not stock imagery.
+// Used by any page that doesn't pass its own `images` prop.
+export const DEFAULT_PAGE_HERO_IMAGES = [
   "/images/projects/trincomalee-mr-dewinda.jpg",
   "/images/projects/mr-kamal-dambokka-kurunegala.jpg",
   "/images/projects/kiyoto-coffee-mathale.jpg",
@@ -28,20 +34,26 @@ const ROTATE_INTERVAL_MS = 5000;
 // Solutions, Projects, Technology, Why CRE, Contact). Keeps the "Engineering
 // the Energy of Tomorrow" premium tone consistent while the homepage gets its
 // own larger cinematic Hero component.
-export default function PageHero({ eyebrow, title, description, children }: PageHeroProps) {
+export default function PageHero({
+  eyebrow,
+  title,
+  description,
+  children,
+  images = DEFAULT_PAGE_HERO_IMAGES,
+}: PageHeroProps) {
   const [index, setIndex] = useState(0);
 
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const id = setInterval(() => {
-      setIndex((i) => (i + 1) % ROTATING_IMAGES.length);
+      setIndex((i) => (i + 1) % images.length);
     }, ROTATE_INTERVAL_MS);
     return () => clearInterval(id);
-  }, []);
+  }, [images.length]);
 
   return (
-    <section className="relative overflow-hidden bg-brand-ink pb-20 pt-40 text-white">
-      {ROTATING_IMAGES.map((src, i) => (
+    <section className="relative flex min-h-[560px] flex-col justify-end overflow-hidden bg-brand-ink pb-20 pt-40 text-white">
+      {images.map((src, i) => (
         <Image
           key={src}
           src={src}
@@ -50,7 +62,7 @@ export default function PageHero({ eyebrow, title, description, children }: Page
           priority={i === 0}
           sizes="100vw"
           className="object-cover transition-opacity duration-[1500ms] ease-in-out"
-          style={{ opacity: i === index ? 0.3 : 0 }}
+          style={{ opacity: i === index ? 0.45 : 0 }}
         />
       ))}
       <div
@@ -58,7 +70,7 @@ export default function PageHero({ eyebrow, title, description, children }: Page
         className="absolute inset-0"
         style={{
           background:
-            "linear-gradient(200deg, rgba(11,15,20,0.92) 0%, rgba(11,15,20,0.85) 45%, rgba(11,15,20,0.94) 100%)",
+            "linear-gradient(200deg, rgba(11,15,20,0.9) 0%, rgba(11,15,20,0.8) 45%, rgba(11,15,20,0.94) 100%)",
         }}
       />
       <div
@@ -87,6 +99,24 @@ export default function PageHero({ eyebrow, title, description, children }: Page
           <p className="mt-6 max-w-2xl text-lg leading-relaxed text-white/70">{description}</p>
         )}
         {children}
+
+        {images.length > 1 && (
+          <div className="mt-10 flex items-center gap-2" role="tablist" aria-label="Background photo">
+            {images.map((src, i) => (
+              <button
+                key={src}
+                type="button"
+                role="tab"
+                aria-selected={i === index}
+                aria-label={`Show background photo ${i + 1}`}
+                onClick={() => setIndex(i)}
+                className={`h-1.5 rounded-full transition-all duration-300 ${
+                  i === index ? "w-7 bg-brand-red" : "w-1.5 bg-white/30 hover:bg-white/50"
+                }`}
+              />
+            ))}
+          </div>
+        )}
       </Container>
     </section>
   );

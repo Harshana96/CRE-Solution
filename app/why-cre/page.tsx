@@ -18,6 +18,14 @@ export default function WhyCrePage() {
         eyebrow="Engineering Expertise. Quality Solutions. Reliable Service."
         title="Why Choose CRE Solutions"
         description="Your requirement. Our engineering. A solution built for a brighter tomorrow."
+        images={[
+          "/images/projects/trincomalee-mr-dewinda.jpg",
+          "/images/projects/kmee-restaurant-gampaha.jpg",
+          "/images/projects/kiyoto-coffee-mathale.jpg",
+          "/images/projects/mr-kamal-dambokka-kurunegala.jpg",
+          "/images/projects/dr-yamuna-kurunegala.jpg",
+          "/images/projects/mr-piyumal-kurunegala.jpg",
+        ]}
       />
       <Stats tone="light" />
       <WhyChooseUs />

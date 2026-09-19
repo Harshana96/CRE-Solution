@@ -22,6 +22,14 @@ export default function SolutionsOverviewPage() {
         eyebrow="What We Deliver"
         title="Our Energy Solutions"
         description="Four disciplines, one engineering team. Explore each solution to see how CRE Solutions designs, installs and supports it."
+        images={[
+          "/images/projects/kiyoto-coffee-mathale.jpg",
+          "/images/projects/mr-janitha-just-computer-kurunegala.jpg",
+          "/images/projects/kmee-restaurant-gampaha.jpg",
+          "/images/projects/mr-kamal-dambokka-kurunegala.jpg",
+          "/images/projects/mr-piyumal-kurunegala.jpg",
+          "/images/projects/trincomalee-mr-dewinda.jpg",
+        ]}
       />
 
       <section className="bg-white py-24">
