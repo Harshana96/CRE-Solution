@@ -49,7 +49,7 @@ export default function SolutionsOverviewPage() {
                     <IconPop delay={i * 0.08} className="flex h-14 w-14 items-center justify-center rounded-lg bg-brand-ink">
                       <Icon size={26} className="text-brand-red" />
                     </IconPop>
-                    <span className="font-heading text-3xl font-extrabold text-brand-line">
+                    <span className="font-heading text-3xl font-extrabold text-brand-muted">
                       {solution.number}
                     </span>
                   </div>

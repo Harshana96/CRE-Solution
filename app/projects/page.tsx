@@ -5,6 +5,8 @@ import ProjectGrid from "@/components/sections/ProjectGrid";
 import SriLankaReach from "@/components/sections/SriLankaReach";
 import ContactCTA from "@/components/sections/ContactCTA";
 import Container from "@/components/ui/Container";
+import SectionHeading from "@/components/ui/SectionHeading";
+import Reveal from "@/components/ui/Reveal";
 
 export const metadata: Metadata = {
   title: "Projects",
@@ -23,7 +25,16 @@ export default function ProjectsPage() {
       <Stats tone="light" />
       <section className="bg-white py-24">
         <Container>
-          <ProjectGrid />
+          <Reveal>
+            <SectionHeading
+              eyebrow="Our Portfolio"
+              title="Every completed installation"
+              description="Browse the full set of solar PV, battery storage and electrical projects delivered across Sri Lanka."
+            />
+          </Reveal>
+          <div className="mt-12">
+            <ProjectGrid />
+          </div>
         </Container>
       </section>
       <SriLankaReach />

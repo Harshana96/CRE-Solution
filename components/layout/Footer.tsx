@@ -24,9 +24,9 @@ export default function Footer() {
         </div>
 
         <div>
-          <h4 className="mb-5 text-xs font-bold uppercase tracking-[0.14em] text-white">
+          <h3 className="mb-5 text-xs font-bold uppercase tracking-[0.14em] text-white">
             Solutions
-          </h4>
+          </h3>
           <ul className="flex flex-col gap-3 text-sm">
             {solutions.map((s) => (
               <li key={s.slug}>
@@ -39,9 +39,9 @@ export default function Footer() {
         </div>
 
         <div>
-          <h4 className="mb-5 text-xs font-bold uppercase tracking-[0.14em] text-white">
+          <h3 className="mb-5 text-xs font-bold uppercase tracking-[0.14em] text-white">
             Company
-          </h4>
+          </h3>
           <ul className="flex flex-col gap-3 text-sm">
             {companyLinks.map((l) => (
               <li key={l.href}>
@@ -54,9 +54,9 @@ export default function Footer() {
         </div>
 
         <div>
-          <h4 className="mb-5 text-xs font-bold uppercase tracking-[0.14em] text-white">
+          <h3 className="mb-5 text-xs font-bold uppercase tracking-[0.14em] text-white">
             Contact
-          </h4>
+          </h3>
           <ul className="flex flex-col gap-4 text-sm">
             <li className="flex items-start gap-3">
               <Phone size={16} className="mt-0.5 flex-none text-brand-red" />

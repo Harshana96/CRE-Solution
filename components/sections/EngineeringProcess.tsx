@@ -122,14 +122,14 @@ export default function EngineeringProcess({
                   {step.number}
                 </span>
               </div>
-              <h4
+              <h3
                 className={cn(
                   "mt-4 text-sm font-bold uppercase tracking-wide",
                   isDark ? "text-white" : "text-brand-ink"
                 )}
               >
                 {step.title}
-              </h4>
+              </h3>
               <p className={cn("mt-1.5 text-xs leading-relaxed", isDark ? "text-white/55" : "text-brand-muted")}>
                 {step.description}
               </p>

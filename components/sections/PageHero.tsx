@@ -43,29 +43,55 @@ export default function PageHero({
   images = DEFAULT_PAGE_HERO_IMAGES,
 }: PageHeroProps) {
   const [index, setIndex] = useState(0);
+  // Only the images actually shown so far get mounted — otherwise all 6
+  // rotating photos would start downloading immediately on load, competing
+  // for bandwidth with the one that's actually the LCP element and tanking
+  // it. Grows as the rotation (or a direct dot click) reaches a new photo;
+  // once shown, an image stays mounted so the crossfade-back still works.
+  const [revealed, setRevealed] = useState(() => new Set([0]));
+
+  function reveal(i: number) {
+    setRevealed((prev) => (prev.has(i) ? prev : new Set(prev).add(i)));
+  }
+
+  function goTo(i: number) {
+    setIndex(i);
+    reveal(i);
+  }
 
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const id = setInterval(() => {
-      setIndex((i) => (i + 1) % images.length);
+      setIndex((i) => {
+        const next = (i + 1) % images.length;
+        reveal(next);
+        return next;
+      });
     }, ROTATE_INTERVAL_MS);
     return () => clearInterval(id);
   }, [images.length]);
 
   return (
     <section className="group relative flex min-h-[560px] flex-col justify-end overflow-hidden bg-brand-ink pb-20 pt-40 text-white">
-      {images.map((src, i) => (
-        <Image
-          key={src}
-          src={src}
-          alt=""
-          fill
-          priority={i === 0}
-          sizes="100vw"
-          className="object-cover transition-opacity duration-[1500ms] ease-in-out"
-          style={{ opacity: i === index ? 0.7 : 0 }}
-        />
-      ))}
+      {images.map((src, i) =>
+        revealed.has(i) ? (
+          <Image
+            key={src}
+            src={src}
+            alt=""
+            fill
+            priority={i === 0}
+            fetchPriority={i === 0 ? "high" : undefined}
+            sizes="100vw"
+            // Sits under a heavy dark gradient at max 70% opacity, so a
+            // lower quality is visually indistinguishable here but cuts
+            // real bytes off what was the LCP image on every inner page.
+            quality={55}
+            className="object-cover transition-opacity duration-[1500ms] ease-in-out"
+            style={{ opacity: i === index ? 0.7 : 0 }}
+          />
+        ) : null
+      )}
       {/* Top-to-bottom instead of diagonal, and much lighter up top — the
           photo should read clearly there; darkens only toward the bottom,
           where the heading/description/dots actually sit (content is
@@ -144,7 +170,7 @@ export default function PageHero({
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: "easeOut", delay: 0.32 }}
-            className="mt-10 flex items-center gap-2"
+            className="mt-10 flex items-center gap-1"
             role="tablist"
             aria-label="Background photo"
           >
@@ -155,11 +181,16 @@ export default function PageHero({
                 role="tab"
                 aria-selected={i === index}
                 aria-label={`Show background photo ${i + 1}`}
-                onClick={() => setIndex(i)}
-                className={`h-1.5 rounded-full transition-all duration-300 ${
-                  i === index ? "w-7 bg-brand-red" : "w-1.5 bg-white/30 hover:bg-white/50"
-                }`}
-              />
+                onClick={() => goTo(i)}
+                className="group flex h-6 w-8 flex-none items-center justify-center"
+              >
+                <span
+                  aria-hidden
+                  className={`h-1.5 rounded-full transition-all duration-300 ${
+                    i === index ? "w-7 bg-brand-red" : "w-1.5 bg-white/30 group-hover:bg-white/50"
+                  }`}
+                />
+              </button>
             ))}
           </motion.div>
         )}
