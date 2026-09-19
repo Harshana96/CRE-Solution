@@ -11,12 +11,31 @@ export interface TechnologyBrand {
    * placeholder in the meantime. */
   logo: string | null;
   /** Real product/site photo for this specific brand — same placeholder
-   * pattern as `logo`. */
+   * pattern as `logo`. Still pending for every brand (client will supply). */
   image: string | null;
 }
 
+// Client-supplied logos (from "CRE technologies" folder), background
+// removed, saved to public/logo/brands/<slug>.png. Brands not in this map
+// don't have a supplied logo yet.
+const LOGO_BY_NAME: Record<string, string> = {
+  GoodWe: "/logo/brands/goodwe.png",
+  Solis: "/logo/brands/solis.png",
+  Huawei: "/logo/brands/huawei.png",
+  Deye: "/logo/brands/deye.png",
+  Growatt: "/logo/brands/growatt.png",
+  Sungrow: "/logo/brands/sungrow.png",
+  "Jinko Solar": "/logo/brands/jinko-solar.png",
+  Astronergy: "/logo/brands/astronergy.png",
+  "Trina Solar": "/logo/brands/trina-solar.png",
+  LONGi: "/logo/brands/longi.png",
+  "JA Solar": "/logo/brands/ja-solar.png",
+  Dyness: "/logo/brands/dyness.png",
+  Kelani: "/logo/brands/kelani.png",
+};
+
 function brand(name: string): TechnologyBrand {
-  return { name, logo: null, image: null };
+  return { name, logo: LOGO_BY_NAME[name] ?? null, image: null };
 }
 
 export const technologyBrandGroups = [
