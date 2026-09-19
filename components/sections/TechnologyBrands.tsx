@@ -24,47 +24,29 @@ const categoryIcon: Record<string, typeof Zap> = {
   "Surge Protection": ShieldCheck,
 };
 
-function LogoCard({ brand }: { brand: TechnologyBrand }) {
+function BrandCard({ brand }: { brand: TechnologyBrand }) {
   return (
-    <div className="group flex min-h-[136px] flex-col items-center justify-center gap-3 rounded-xl border border-brand-line bg-white p-6 text-center transition-all duration-200 hover:-translate-y-0.5 hover:border-brand-red/30 hover:shadow-[0_16px_32px_-20px_rgba(11,15,20,0.35)]">
+    <div className="group relative flex aspect-[4/3] flex-col items-center justify-center gap-3 overflow-hidden rounded-2xl border border-brand-line bg-white p-6 transition-all duration-300 hover:-translate-y-1 hover:border-brand-red/40 hover:shadow-[0_24px_48px_-24px_rgba(11,15,20,0.35)]">
+      <div
+        aria-hidden
+        className="absolute inset-x-0 top-0 h-1 origin-left scale-x-0 bg-brand-red transition-transform duration-300 group-hover:scale-x-100"
+      />
       {brand.logo ? (
-        <div className="relative h-14 w-full">
+        <div className="relative h-16 w-full sm:h-20">
           <Image
             src={brand.logo}
             alt={`${brand.name} logo`}
             fill
-            sizes="200px"
-            className="object-contain"
+            sizes="(min-width: 1024px) 220px, 45vw"
+            className="object-contain transition-transform duration-300 group-hover:scale-110"
           />
         </div>
       ) : (
         <>
-          <ImageIcon size={22} className="text-brand-line" />
-          <span className="text-sm font-bold text-brand-ink">{brand.name}</span>
+          <ImageIcon size={26} className="text-brand-line" />
+          <span className="text-center text-sm font-bold text-brand-ink">{brand.name}</span>
         </>
       )}
-    </div>
-  );
-}
-
-function ProductPhotoPlaceholder({ brand }: { brand: TechnologyBrand }) {
-  return (
-    <div
-      className="relative flex min-h-[136px] flex-col items-center justify-center gap-2 overflow-hidden rounded-xl border border-dashed border-brand-line/80 bg-brand-light text-center"
-      aria-label={`Product photo for ${brand.name} — coming soon`}
-    >
-      <div
-        aria-hidden
-        className="absolute inset-0 opacity-40"
-        style={{
-          backgroundImage:
-            "repeating-linear-gradient(115deg, transparent 0 12px, var(--color-brand-line) 12px 13px)",
-        }}
-      />
-      <ImageIcon size={20} className="relative z-10 text-brand-muted" />
-      <span className="relative z-10 text-[11px] font-semibold uppercase tracking-wide text-brand-muted">
-        Product photo coming soon
-      </span>
     </div>
   );
 }
@@ -72,6 +54,10 @@ function ProductPhotoPlaceholder({ brand }: { brand: TechnologyBrand }) {
 export default function TechnologyBrands() {
   return (
     <section className="relative overflow-hidden bg-brand-light py-24">
+      <div
+        aria-hidden
+        className="absolute inset-x-0 top-0 h-[520px] bg-gradient-to-b from-brand-red-soft via-brand-light to-brand-light"
+      />
       <div
         aria-hidden
         className="absolute inset-0 opacity-[0.35]"
@@ -89,46 +75,30 @@ export default function TechnologyBrands() {
           />
         </Reveal>
 
-        <div className="mt-14 space-y-8">
+        <div className="mt-14 space-y-14">
           {technologyBrandGroups.map((group, i) => {
             const Icon = categoryIcon[group.category] ?? Zap;
             return (
               <Reveal key={group.category} delay={i * 0.06}>
-                <div className="overflow-hidden rounded-2xl border border-brand-line bg-white shadow-[0_20px_50px_-30px_rgba(11,15,20,0.25)]">
-                  <div className="flex flex-wrap items-center justify-between gap-3 border-b border-brand-line bg-brand-ink px-6 py-5 sm:px-8">
+                <div>
+                  <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
                     <div className="flex items-center gap-3">
-                      <div className="flex h-10 w-10 flex-none items-center justify-center rounded-lg bg-brand-red">
-                        <Icon size={19} className="text-white" />
+                      <div className="flex h-11 w-11 flex-none items-center justify-center rounded-xl bg-brand-ink shadow-[0_10px_20px_-8px_rgba(11,15,20,0.5)]">
+                        <Icon size={20} className="text-brand-red" />
                       </div>
-                      <h3 className="text-sm font-bold uppercase tracking-[0.1em] text-white">
-                        {group.category}
-                      </h3>
+                      <div>
+                        <h3 className="text-base font-bold uppercase tracking-[0.08em] text-brand-ink">
+                          {group.category}
+                        </h3>
+                        <p className="text-xs text-brand-muted">{group.tagline}</p>
+                      </div>
                     </div>
-                    <span className="text-xs text-white/55">{group.tagline}</span>
                   </div>
 
-                  <div className="divide-y divide-brand-line px-6 sm:px-8">
-                    {group.brands.map((brandItem, j) => {
-                      const imageOnLeft = j % 2 === 1;
-                      return (
-                        <div
-                          key={brandItem.name}
-                          className="grid grid-cols-1 gap-4 py-6 sm:grid-cols-2 sm:gap-6"
-                        >
-                          {imageOnLeft ? (
-                            <>
-                              <ProductPhotoPlaceholder brand={brandItem} />
-                              <LogoCard brand={brandItem} />
-                            </>
-                          ) : (
-                            <>
-                              <LogoCard brand={brandItem} />
-                              <ProductPhotoPlaceholder brand={brandItem} />
-                            </>
-                          )}
-                        </div>
-                      );
-                    })}
+                  <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 sm:gap-5 lg:grid-cols-4">
+                    {group.brands.map((brandItem) => (
+                      <BrandCard key={brandItem.name} brand={brandItem} />
+                    ))}
                   </div>
                 </div>
               </Reveal>
@@ -136,11 +106,11 @@ export default function TechnologyBrands() {
           })}
         </div>
 
-        <p className="mt-10 max-w-2xl text-xs text-brand-muted">
+        <p className="mt-14 max-w-2xl text-xs text-brand-muted">
           Brands shown are the equipment manufacturers CRE Solutions works with.
-          Product photos are placeholders pending real assets. CRE Solutions is
-          not represented here as an official distributor, authorized dealer,
-          partner or certified installer of these brands.
+          Product photos will be added as they become available. CRE Solutions
+          is not represented here as an official distributor, authorized
+          dealer, partner or certified installer of these brands.
         </p>
       </Container>
     </section>
