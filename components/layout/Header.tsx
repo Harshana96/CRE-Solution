@@ -4,9 +4,11 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
+import { ChevronDown, Sun, BatteryCharging, PlugZap, Zap } from "lucide-react";
 import Logo from "@/components/ui/Logo";
 import Button from "@/components/ui/Button";
 import MobileMenu from "@/components/layout/MobileMenu";
+import { solutions } from "@/data/solutions";
 import { cn } from "@/lib/utils";
 
 export const navItems = [
@@ -18,6 +20,8 @@ export const navItems = [
   { label: "Why CRE", href: "/why-cre" },
   { label: "Contact", href: "/contact" },
 ];
+
+const solutionIconMap = { Sun, BatteryCharging, PlugZap, Zap };
 
 function isActivePath(pathname: string, href: string) {
   if (href === "/") return pathname === "/";
@@ -65,22 +69,31 @@ export default function Header() {
         <nav className="hidden items-center gap-8 lg:flex">
           {navItems.map((item, i) => {
             const active = isActivePath(pathname, item.href);
+            const hasDropdown = item.href === "/solutions";
+
             return (
               <motion.div
                 key={item.href}
                 initial={{ y: -10, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ duration: 0.4, ease: "easeOut", delay: 0.15 + i * 0.05 }}
+                className={cn("relative", hasDropdown && "group/dropdown")}
               >
                 <Link
                   href={item.href}
                   aria-current={active ? "page" : undefined}
                   className={cn(
-                    "group relative text-sm font-semibold tracking-wide transition-colors hover:text-brand-red",
+                    "group relative flex items-center gap-1 text-sm font-semibold tracking-wide transition-colors hover:text-brand-red",
                     active ? "text-brand-red" : "text-brand-ink"
                   )}
                 >
                   {item.label}
+                  {hasDropdown && (
+                    <ChevronDown
+                      size={14}
+                      className="transition-transform duration-300 group-hover/dropdown:rotate-180"
+                    />
+                  )}
                   <span
                     aria-hidden
                     className={cn(
@@ -89,6 +102,36 @@ export default function Header() {
                     )}
                   />
                 </Link>
+
+                {hasDropdown && (
+                  <div className="absolute left-1/2 top-full z-10 w-64 -translate-x-1/2">
+                    {/* Always-hoverable bridge covering the visual gap so
+                        moving the pointer from the link down to the panel
+                        doesn't close the dropdown partway through. */}
+                    <div className="h-3 w-full" />
+                    <div className="translate-y-1 opacity-0 transition-all duration-200 ease-out group-hover/dropdown:translate-y-0 group-hover/dropdown:opacity-100">
+                      <div className="pointer-events-none overflow-hidden rounded-xl border border-brand-line bg-white p-2 shadow-[0_24px_48px_-16px_rgba(11,15,20,0.25)] group-hover/dropdown:pointer-events-auto">
+                        {solutions.map((solution) => {
+                          const Icon = solutionIconMap[solution.icon];
+                          return (
+                            <Link
+                              key={solution.slug}
+                              href={`/solutions/${solution.slug}`}
+                              className="flex items-center gap-3 rounded-lg px-3 py-2.5 transition-colors hover:bg-brand-light"
+                            >
+                              <span className="flex h-9 w-9 flex-none items-center justify-center rounded-lg bg-brand-red-soft">
+                                <Icon size={17} className="text-brand-red" />
+                              </span>
+                              <span className="text-sm font-semibold text-brand-ink">
+                                {solution.shortTitle}
+                              </span>
+                            </Link>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  </div>
+                )}
               </motion.div>
             );
           })}
