@@ -83,20 +83,19 @@ export default function EngineeringProcess({
                     alt=""
                     fill
                     sizes="(min-width: 1280px) 12vw, (min-width: 640px) 25vw, 50vw"
-                    className="object-cover opacity-80 grayscale-[85%] contrast-110 transition-all duration-500 ease-out group-hover:scale-110 group-hover:opacity-100 group-hover:grayscale-[35%]"
+                    className="object-cover opacity-70 transition-transform duration-500 ease-out group-hover:scale-110 group-hover:opacity-90"
                   />
-                  {/* Duotone brand wash: grayscale kills each photo's own
-                      hue (sky blue, greenery, panel white...) so 8 different
-                      real project photos read as one cohesive dark-red strip
-                      instead of clashing side by side; hovering a tile
-                      lets a bit of its real color show through. */}
+                  {/* Uniform dark-red brand wash over every tile, so eight
+                      differently-coloured real project photos read as one
+                      cohesive strip instead of clashing side by side —
+                      light enough that the photo itself stays visible. */}
                   <div
                     aria-hidden
-                    className="absolute inset-0 bg-brand-red opacity-40 mix-blend-multiply transition-opacity duration-500 group-hover:opacity-20"
+                    className="absolute inset-0 bg-gradient-to-t from-brand-ink/90 via-brand-ink/35 to-brand-ink/10"
                   />
                   <div
                     aria-hidden
-                    className="absolute inset-0 bg-gradient-to-t from-brand-ink/95 via-brand-ink/55 to-brand-ink/25"
+                    className="absolute inset-0 bg-gradient-to-br from-brand-red/25 via-transparent to-transparent opacity-50 transition-opacity duration-500 group-hover:opacity-70"
                   />
                   <div
                     aria-hidden
