@@ -14,7 +14,7 @@ export default function Certifications() {
   const hasCertifications = certifications.length > 0;
 
   return (
-    <section className="bg-brand-light py-24">
+    <section className="bg-white py-24">
       <Container>
         <div className="grid grid-cols-1 gap-10 md:grid-cols-[280px_1fr] md:gap-14">
           <Reveal>
@@ -58,7 +58,7 @@ export default function Certifications() {
                 : Array.from({ length: PLACEHOLDER_SLOTS }).map((_, i) => (
                     <div
                       key={i}
-                      className="flex aspect-square flex-col items-center justify-center gap-2 rounded-xl border border-dashed border-brand-line/80 bg-white/60 text-center"
+                      className="flex aspect-square flex-col items-center justify-center gap-2 rounded-xl border border-dashed border-brand-line/80 bg-brand-light text-center"
                     >
                       <BadgeCheck size={22} className="text-brand-line" />
                       <span className="text-[11px] font-semibold uppercase tracking-wide text-brand-muted">

@@ -5,6 +5,7 @@ import SolutionsShowcase from "@/components/sections/SolutionsShowcase";
 import WhyChooseUs from "@/components/sections/WhyChooseUs";
 import EngineeringProcess from "@/components/sections/EngineeringProcess";
 import ProjectGrid from "@/components/sections/ProjectGrid";
+import Certifications from "@/components/sections/Certifications";
 import SriLankaReach from "@/components/sections/SriLankaReach";
 import ContactCTA from "@/components/sections/ContactCTA";
 import Container from "@/components/ui/Container";
@@ -45,6 +46,8 @@ export default function HomePage() {
           </div>
         </Container>
       </section>
+
+      <Certifications />
 
       <SriLankaReach />
       <ContactCTA />

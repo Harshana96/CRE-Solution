@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import PageHero from "@/components/sections/PageHero";
 import WhyChooseUs from "@/components/sections/WhyChooseUs";
-import Certifications from "@/components/sections/Certifications";
 import Leadership from "@/components/sections/Leadership";
 import Stats from "@/components/sections/Stats";
 import ContactCTA from "@/components/sections/ContactCTA";
@@ -30,7 +29,6 @@ export default function WhyCrePage() {
       />
       <Stats tone="light" />
       <WhyChooseUs />
-      <Certifications />
       <Leadership />
       <ContactCTA />
     </>
