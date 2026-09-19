@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { motion } from "framer-motion";
 import Logo from "@/components/ui/Logo";
 import Button from "@/components/ui/Button";
 import MobileMenu from "@/components/layout/MobileMenu";
@@ -41,7 +42,10 @@ export default function Header() {
   const atHeroTop = isHome && !scrolled;
 
   return (
-    <header
+    <motion.header
+      initial={{ y: -24, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.5, ease: "easeOut" }}
       className={cn(
         "fixed inset-x-0 top-0 z-50 transition-all duration-300",
         atHeroTop
@@ -59,39 +63,50 @@ export default function Header() {
         />
 
         <nav className="hidden items-center gap-8 lg:flex">
-          {navItems.map((item) => {
+          {navItems.map((item, i) => {
             const active = isActivePath(pathname, item.href);
             return (
-              <Link
+              <motion.div
                 key={item.href}
-                href={item.href}
-                aria-current={active ? "page" : undefined}
-                className={cn(
-                  "relative text-sm font-semibold tracking-wide transition-colors hover:text-brand-red",
-                  active ? "text-brand-red" : "text-brand-ink"
-                )}
+                initial={{ y: -10, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ duration: 0.4, ease: "easeOut", delay: 0.15 + i * 0.05 }}
               >
-                {item.label}
-                <span
-                  aria-hidden
+                <Link
+                  href={item.href}
+                  aria-current={active ? "page" : undefined}
                   className={cn(
-                    "absolute -bottom-1.5 left-0 h-0.5 w-full rounded-full bg-brand-red transition-opacity",
-                    active ? "opacity-100" : "opacity-0"
+                    "group relative text-sm font-semibold tracking-wide transition-colors hover:text-brand-red",
+                    active ? "text-brand-red" : "text-brand-ink"
                   )}
-                />
-              </Link>
+                >
+                  {item.label}
+                  <span
+                    aria-hidden
+                    className={cn(
+                      "absolute -bottom-1.5 left-0 h-0.5 w-full origin-left rounded-full bg-brand-red transition-transform duration-300 ease-out",
+                      active ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"
+                    )}
+                  />
+                </Link>
+              </motion.div>
             );
           })}
         </nav>
 
-        <div className="hidden lg:block">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.4, ease: "easeOut", delay: 0.15 + navItems.length * 0.05 }}
+          className="hidden lg:block"
+        >
           <Button href="/contact" variant="primary" className="px-6 py-3 text-xs">
             Get a Quote
           </Button>
-        </div>
+        </motion.div>
 
         <MobileMenu />
       </div>
-    </header>
+    </motion.header>
   );
 }

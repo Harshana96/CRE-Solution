@@ -55,7 +55,7 @@ export default function MobileMenu() {
         </button>
       </div>
       <nav className="flex flex-1 flex-col justify-center gap-2 px-8">
-        {navItems.map((item) => {
+        {navItems.map((item, i) => {
           const active = isActivePath(pathname, item.href);
           return (
             <Link
@@ -63,9 +63,11 @@ export default function MobileMenu() {
               href={item.href}
               onClick={() => setOpen(false)}
               aria-current={active ? "page" : undefined}
+              style={{ transitionDelay: open ? `${100 + i * 45}ms` : "0ms" }}
               className={cn(
-                "border-b py-4 text-2xl font-bold transition-colors hover:text-brand-red",
-                active ? "border-brand-red text-brand-red" : "border-white/10 text-white"
+                "border-b py-4 text-2xl font-bold transition-all duration-300 ease-out hover:text-brand-red",
+                active ? "border-brand-red text-brand-red" : "border-white/10 text-white",
+                open ? "translate-x-0 opacity-100" : "translate-x-8 opacity-0"
               )}
             >
               {item.label}
