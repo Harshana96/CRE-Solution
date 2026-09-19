@@ -5,41 +5,55 @@
 // dealer, partner or certified installer of any of these brands — do not add
 // that language in copy that references this data.
 
+export interface TechnologyBrand {
+  name: string;
+  /** Real logo image path once the client supplies one — null shows a
+   * placeholder in the meantime. */
+  logo: string | null;
+  /** Real product/site photo for this specific brand — same placeholder
+   * pattern as `logo`. */
+  image: string | null;
+}
+
+function brand(name: string): TechnologyBrand {
+  return { name, logo: null, image: null };
+}
+
 export const technologyBrandGroups = [
   {
     category: "Inverter Brands",
     tagline: "Proven performance. A brighter future.",
-    brands: ["GoodWe", "Solis", "Huawei", "Deye", "Growatt", "Sungrow"],
+    brands: ["GoodWe", "Solis", "Huawei", "Deye", "Growatt", "Sungrow"].map(brand),
   },
   {
     category: "Solar Panel Brands",
     tagline: "High quality. Higher possibilities.",
-    brands: ["Jinko Solar", "Astronergy", "Trina Solar", "LONGi", "JA Solar"],
+    brands: ["Jinko Solar", "Astronergy", "Trina Solar", "LONGi", "JA Solar"].map(brand),
   },
   {
     category: "Battery Energy Storage",
     tagline: "Store clean energy for an independent tomorrow.",
-    brands: ["GoodWe", "Dyness", "Solis"],
+    brands: ["GoodWe", "Dyness", "Solis"].map(brand),
   },
   {
     category: "EV Charging Solutions",
     tagline: "Powering cleaner mobility.",
-    brands: ["BENNY"],
+    brands: ["BENNY"].map(brand),
   },
   {
     category: "Wiring",
     tagline: "Safe, certified cabling for every installation.",
-    brands: ["Kelani", "KBE", "LAPP"],
+    brands: ["Kelani", "KBE", "LAPP"].map(brand),
   },
   {
     category: "Aluminum",
     tagline: "Durable mounting and structural components.",
-    brands: ["Lanka Aluminium", "Swistech"],
+    brands: ["Lanka Aluminium", "Swistech"].map(brand),
   },
   {
     category: "Surge Protection",
     tagline: "Protecting systems from electrical surges.",
-    brands: ["Schneider", "ZBENY"],
+    brands: ["Schneider", "ZBENY"].map(brand),
   },
 ] as const;
 
