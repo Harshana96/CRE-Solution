@@ -53,11 +53,13 @@ export default function IconPop({
         },
       }}
     >
-      {/* Bounce/overshoot easing (not a flat ease-out) so the hover reaction
-          reads the same as the scroll pop-in's spring — CSS transitions
-          can't run real spring physics, but this curve overshoots past the
-          target and settles back the same way. */}
-      <span className="inline-flex transition-transform duration-[600ms] ease-[cubic-bezier(0.34,1.9,0.64,1)] group-hover:scale-[1.35] group-hover:-rotate-12">
+      {/* Multi-step wiggle (see @keyframes icon-hover-wiggle in globals.css)
+          so hovering the card plays the same kind of rotate-through-several-
+          angles motion as the scroll pop-in — a plain CSS transition can
+          only ease smoothly between two values, it can't reproduce that.
+          The `transition` here only handles animating back to rest once the
+          animation is removed on mouse-out. */}
+      <span className="inline-flex origin-center transition-transform duration-300 ease-out group-hover:animate-[icon-hover-wiggle_0.7s_ease-out_forwards]">
         {children}
       </span>
     </motion.div>
