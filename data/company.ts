@@ -6,7 +6,6 @@ export const company = {
   fullName: "Ceylon Radiant Energy Solutions",
   shortName: "CRE Solutions",
   tagline: "Engineering the Energy of Tomorrow",
-  heroSubline: "Renewable solutions for a cleaner, greener Sri Lanka.",
   founded: 2022,
   description:
     "CRE Solutions (Pvt) Ltd (Ceylon Radiant Energy Solutions) is an energy and electrical solutions company delivering reliable and sustainable solutions across Sri Lanka. We design and deliver customized solutions for residential, commercial and industrial customers, combining engineering expertise with practical experience.",

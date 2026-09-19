@@ -54,16 +54,6 @@ export default function Hero() {
           <span className="text-brand-red">Tomorrow</span>
         </motion.h1>
 
-        <motion.p
-          initial={{ opacity: 0, y: 22 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.65, ease: "easeOut", delay: 0.16 }}
-          className="mt-7 max-w-xl text-lg leading-relaxed text-brand-muted sm:text-xl"
-        >
-          {company.heroSubline} Solar PV, battery storage, EV charging and
-          electrical systems, engineered and installed islandwide.
-        </motion.p>
-
         <motion.div
           initial={{ opacity: 0, y: 22 }}
           animate={{ opacity: 1, y: 0 }}
@@ -71,7 +61,7 @@ export default function Hero() {
           className="mt-10 flex flex-wrap gap-4"
         >
           <Button href="/contact" variant="primary">
-            Get a Quote <ArrowRight size={16} />
+            Free Consultation <ArrowRight size={16} />
           </Button>
           <Button href="/solutions" variant="outline-dark">
             Explore Our Solutions
