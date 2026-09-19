@@ -62,15 +62,20 @@ export default function PageHero({
           priority={i === 0}
           sizes="100vw"
           className="object-cover transition-opacity duration-[1500ms] ease-in-out"
-          style={{ opacity: i === index ? 0.45 : 0 }}
+          style={{ opacity: i === index ? 0.7 : 0 }}
         />
       ))}
+      {/* Top-to-bottom instead of diagonal, and much lighter up top — the
+          photo should read clearly there; darkens only toward the bottom,
+          where the heading/description/dots actually sit (content is
+          bottom-aligned via justify-end), so text stays legible without
+          dimming the image everywhere. */}
       <div
         aria-hidden
         className="absolute inset-0"
         style={{
           background:
-            "linear-gradient(200deg, rgba(11,15,20,0.9) 0%, rgba(11,15,20,0.8) 45%, rgba(11,15,20,0.94) 100%)",
+            "linear-gradient(180deg, rgba(11,15,20,0.25) 0%, rgba(11,15,20,0.35) 35%, rgba(11,15,20,0.65) 65%, rgba(11,15,20,0.93) 100%)",
         }}
       />
       <div
