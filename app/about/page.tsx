@@ -7,6 +7,7 @@ import SriLankaReach from "@/components/sections/SriLankaReach";
 import ContactCTA from "@/components/sections/ContactCTA";
 import Container from "@/components/ui/Container";
 import SectionHeading from "@/components/ui/SectionHeading";
+import IconPop from "@/components/ui/IconPop";
 import { company } from "@/data/company";
 
 export const metadata: Metadata = {
@@ -40,16 +41,16 @@ export default function AboutPage() {
         <Container>
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
             <div className="rounded-xl border border-brand-line bg-white p-8">
-              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-brand-red-soft">
+              <IconPop className="flex h-12 w-12 items-center justify-center rounded-full bg-brand-red-soft">
                 <Target size={22} className="text-brand-red" />
-              </div>
+              </IconPop>
               <h3 className="mt-5 text-xl font-bold text-brand-ink">Our Mission</h3>
               <p className="mt-3 text-brand-muted">{company.mission}</p>
             </div>
             <div className="rounded-xl border border-brand-line bg-white p-8">
-              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-brand-red-soft">
+              <IconPop delay={0.08} className="flex h-12 w-12 items-center justify-center rounded-full bg-brand-red-soft">
                 <Eye size={22} className="text-brand-red" />
-              </div>
+              </IconPop>
               <h3 className="mt-5 text-xl font-bold text-brand-ink">Our Vision</h3>
               <p className="mt-3 text-brand-muted">{company.vision}</p>
             </div>

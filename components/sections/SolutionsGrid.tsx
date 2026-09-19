@@ -3,6 +3,7 @@ import { Sun, BatteryCharging, PlugZap, Zap, ArrowUpRight } from "lucide-react";
 import Container from "@/components/ui/Container";
 import SectionHeading from "@/components/ui/SectionHeading";
 import Reveal from "@/components/ui/Reveal";
+import IconPop from "@/components/ui/IconPop";
 import { solutions } from "@/data/solutions";
 
 const iconMap = { Sun, BatteryCharging, PlugZap, Zap };
@@ -28,9 +29,12 @@ export default function SolutionsGrid() {
                   href={`/solutions/${solution.slug}`}
                   className="group relative flex h-full flex-col gap-5 rounded-xl border border-brand-line bg-white p-7 transition-all duration-200 hover:-translate-y-1.5 hover:border-brand-red/40 hover:shadow-[0_24px_48px_-24px_rgba(11,15,20,0.28)]"
                 >
-                  <div className="flex h-14 w-14 items-center justify-center rounded-lg bg-brand-ink transition-colors group-hover:bg-brand-red">
+                  <IconPop
+                    delay={i * 0.08}
+                    className="flex h-14 w-14 items-center justify-center rounded-lg bg-brand-ink transition-colors group-hover:bg-brand-red"
+                  >
                     <Icon size={26} className="text-brand-red group-hover:text-white" />
-                  </div>
+                  </IconPop>
                   <div>
                     <span className="text-xs font-bold uppercase tracking-widest text-brand-red">
                       {solution.number}

@@ -5,6 +5,7 @@ import PageHero from "@/components/sections/PageHero";
 import ContactCTA from "@/components/sections/ContactCTA";
 import Container from "@/components/ui/Container";
 import Button from "@/components/ui/Button";
+import IconPop from "@/components/ui/IconPop";
 import { solutions } from "@/data/solutions";
 
 const iconMap = { Sun, BatteryCharging, PlugZap, Zap };
@@ -35,7 +36,7 @@ export default function SolutionsOverviewPage() {
       <section className="bg-white py-24">
         <Container>
           <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
-            {solutions.map((solution) => {
+            {solutions.map((solution, i) => {
               const Icon = iconMap[solution.icon];
               return (
                 <div
@@ -43,9 +44,9 @@ export default function SolutionsOverviewPage() {
                   className="flex flex-col rounded-xl border border-brand-line bg-white p-9"
                 >
                   <div className="flex items-center justify-between">
-                    <div className="flex h-14 w-14 items-center justify-center rounded-lg bg-brand-ink">
+                    <IconPop delay={i * 0.08} className="flex h-14 w-14 items-center justify-center rounded-lg bg-brand-ink">
                       <Icon size={26} className="text-brand-red" />
-                    </div>
+                    </IconPop>
                     <span className="font-heading text-3xl font-extrabold text-brand-line">
                       {solution.number}
                     </span>

@@ -5,6 +5,7 @@ import ContactCTA from "@/components/sections/ContactCTA";
 import Container from "@/components/ui/Container";
 import SectionHeading from "@/components/ui/SectionHeading";
 import Reveal from "@/components/ui/Reveal";
+import IconPop from "@/components/ui/IconPop";
 import { solutions, type SolutionSlug } from "@/data/solutions";
 import { batteryHighlights, evChargingHighlights } from "@/data/technology";
 
@@ -20,9 +21,9 @@ export default function SolutionDetail({ slug }: { slug: SolutionSlug }) {
   return (
     <>
       <PageHero eyebrow={`Solution ${solution.number}`} title={solution.title} description={solution.heroSubline}>
-        <div className="mt-8 flex h-14 w-14 items-center justify-center rounded-lg bg-white/10">
+        <IconPop className="mt-8 flex h-14 w-14 items-center justify-center rounded-lg bg-white/10">
           <Icon size={26} className="text-brand-red" />
-        </div>
+        </IconPop>
       </PageHero>
 
       <section className="bg-white py-24">
