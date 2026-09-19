@@ -3,12 +3,19 @@
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import { navItems } from "@/components/layout/Header";
 import Button from "@/components/ui/Button";
 import { cn } from "@/lib/utils";
 
+function isActivePath(pathname: string, href: string) {
+  if (href === "/") return pathname === "/";
+  return pathname === href || pathname.startsWith(`${href}/`);
+}
+
 export default function MobileMenu() {
+  const pathname = usePathname();
   const [open, setOpen] = useState(false);
   // `document` exists on both server and client, so `typeof document !==
   // "undefined"` is true on the client's very first (hydration) render —
@@ -48,16 +55,23 @@ export default function MobileMenu() {
         </button>
       </div>
       <nav className="flex flex-1 flex-col justify-center gap-2 px-8">
-        {navItems.map((item) => (
-          <Link
-            key={item.href}
-            href={item.href}
-            onClick={() => setOpen(false)}
-            className="border-b border-white/10 py-4 text-2xl font-bold text-white transition-colors hover:text-brand-red"
-          >
-            {item.label}
-          </Link>
-        ))}
+        {navItems.map((item) => {
+          const active = isActivePath(pathname, item.href);
+          return (
+            <Link
+              key={item.href}
+              href={item.href}
+              onClick={() => setOpen(false)}
+              aria-current={active ? "page" : undefined}
+              className={cn(
+                "border-b py-4 text-2xl font-bold transition-colors hover:text-brand-red",
+                active ? "border-brand-red text-brand-red" : "border-white/10 text-white"
+              )}
+            >
+              {item.label}
+            </Link>
+          );
+        })}
       </nav>
       <div className="px-8 pb-10">
         <Button href="/contact" variant="primary" className="w-full">

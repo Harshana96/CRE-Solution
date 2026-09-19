@@ -18,6 +18,11 @@ export const navItems = [
   { label: "Contact", href: "/contact" },
 ];
 
+function isActivePath(pathname: string, href: string) {
+  if (href === "/") return pathname === "/";
+  return pathname === href || pathname.startsWith(`${href}/`);
+}
+
 export default function Header() {
   const pathname = usePathname();
   const isHome = pathname === "/";
@@ -54,15 +59,29 @@ export default function Header() {
         />
 
         <nav className="hidden items-center gap-8 lg:flex">
-          {navItems.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className="text-sm font-semibold tracking-wide text-brand-ink transition-colors hover:text-brand-red"
-            >
-              {item.label}
-            </Link>
-          ))}
+          {navItems.map((item) => {
+            const active = isActivePath(pathname, item.href);
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                aria-current={active ? "page" : undefined}
+                className={cn(
+                  "relative text-sm font-semibold tracking-wide transition-colors hover:text-brand-red",
+                  active ? "text-brand-red" : "text-brand-ink"
+                )}
+              >
+                {item.label}
+                <span
+                  aria-hidden
+                  className={cn(
+                    "absolute -bottom-1.5 left-0 h-0.5 w-full rounded-full bg-brand-red transition-opacity",
+                    active ? "opacity-100" : "opacity-0"
+                  )}
+                />
+              </Link>
+            );
+          })}
         </nav>
 
         <div className="hidden lg:block">
