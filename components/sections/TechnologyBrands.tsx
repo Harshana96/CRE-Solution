@@ -53,7 +53,7 @@ function ProductPanel({ brand }: { brand: TechnologyBrand }) {
     );
   }
   return (
-    <div className="relative flex aspect-[4/3] w-full flex-col items-center justify-center gap-3 rounded-3xl border border-brand-line bg-gradient-to-br from-white to-brand-light sm:aspect-[5/4]">
+    <div className="relative flex aspect-[4/3] w-full flex-col items-center justify-center gap-3 rounded-3xl bg-white shadow-[0_20px_40px_-30px_rgba(11,15,20,0.35)] sm:aspect-[5/4]">
       <ImageIcon size={40} className="text-brand-line" strokeWidth={1.4} />
       <span className="text-xs font-semibold uppercase tracking-wide text-brand-muted">
         Product photo coming soon
@@ -79,14 +79,14 @@ function BrandRow({
 
   return (
     <div
-      className={`grid grid-cols-1 items-center gap-10 py-12 md:grid-cols-2 md:gap-14 lg:gap-20 ${
+      className={`grid grid-cols-1 items-center gap-10 rounded-3xl bg-brand-light/70 p-8 sm:p-12 md:grid-cols-2 md:gap-16 lg:gap-24 ${
         reverse ? "md:[&>*:first-child]:order-2" : ""
       }`}
     >
       <div className="relative max-w-md">
         <span
           aria-hidden
-          className="pointer-events-none absolute -top-10 -left-1 select-none text-[5.5rem] font-black leading-none text-brand-light sm:text-[6.5rem]"
+          className="pointer-events-none absolute -top-14 -left-1 select-none text-[6.5rem] font-black leading-none text-white sm:text-[8rem]"
         >
           {String(index + 1).padStart(2, "0")}
         </span>
@@ -95,32 +95,30 @@ function BrandRow({
           <h3 className="sr-only">{brand.name}</h3>
 
           {brand.logo ? (
-            <div className="inline-flex h-36 items-center rounded-2xl border border-brand-line bg-white px-8 shadow-[0_20px_40px_-28px_rgba(11,15,20,0.4)] sm:h-44 sm:px-10">
-              <div className="relative h-20 w-64 sm:h-28 sm:w-80">
-                <Image
-                  src={brand.logo}
-                  alt={`${brand.name} logo`}
-                  fill
-                  sizes="320px"
-                  className="object-contain object-left"
-                />
-              </div>
+            <div className="relative h-24 w-full max-w-[280px] sm:h-32 sm:max-w-[340px]">
+              <Image
+                src={brand.logo}
+                alt={`${brand.name} logo`}
+                fill
+                sizes="340px"
+                className="object-contain object-left"
+              />
             </div>
           ) : (
-            <div className="inline-flex h-36 items-center rounded-2xl border border-brand-line bg-white px-8 shadow-[0_20px_40px_-28px_rgba(11,15,20,0.4)] sm:h-44 sm:px-10">
-              <span className="text-2xl font-bold text-brand-ink">{brand.name}</span>
-            </div>
+            <span className="text-3xl font-extrabold text-brand-ink sm:text-4xl">
+              {brand.name}
+            </span>
           )}
 
-          <p className="mt-5 text-base leading-relaxed text-brand-muted">{tagline}</p>
-          <span className="mt-6 inline-flex items-center gap-2 rounded-full border border-brand-line px-4 py-2 text-xs font-bold uppercase tracking-wide text-brand-ink">
+          <p className="mt-6 text-lg leading-relaxed text-brand-muted">{tagline}</p>
+          <span className="mt-6 inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-xs font-bold uppercase tracking-wide text-brand-ink shadow-sm">
             <Icon size={14} className="text-brand-red" />
             {category}
           </span>
         </div>
       </div>
 
-      <div className="mx-auto w-full max-w-xs sm:max-w-sm">
+      <div className="mx-auto w-full max-w-sm sm:max-w-md">
         <ProductPanel brand={brand} />
       </div>
     </div>
@@ -138,11 +136,11 @@ export default function TechnologyBrands() {
           />
         </Reveal>
 
-        <div className="mt-8">
+        <div className="mt-8 space-y-8">
           {rows.map(({ brand, category, tagline, isFirstInGroup, globalIndex }) => (
             <div key={`${category}-${brand.name}-${globalIndex}`}>
               {isFirstInGroup && (
-                <div className={`flex items-center gap-3 border-t border-brand-line pt-10 ${globalIndex === 0 ? "border-t-0 pt-0" : ""}`}>
+                <div className={`mb-8 flex items-center gap-3 border-t border-brand-line pt-10 ${globalIndex === 0 ? "border-t-0 pt-0" : ""}`}>
                   <span className="h-px flex-1 bg-brand-line" aria-hidden />
                   <span className="text-xs font-bold uppercase tracking-[0.15em] text-brand-red">
                     {category}
