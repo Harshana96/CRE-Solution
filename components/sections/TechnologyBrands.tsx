@@ -95,12 +95,12 @@ function BrandRow({
           <h3 className="sr-only">{brand.name}</h3>
 
           {brand.logo ? (
-            <div className="relative h-24 w-full max-w-[280px] sm:h-32 sm:max-w-[340px]">
+            <div className="relative h-32 w-full max-w-[360px] sm:h-44 sm:max-w-[440px]">
               <Image
                 src={brand.logo}
                 alt={`${brand.name} logo`}
                 fill
-                sizes="340px"
+                sizes="440px"
                 className="object-contain object-left"
               />
             </div>
