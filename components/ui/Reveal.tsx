@@ -8,12 +8,11 @@ const variants: Variants = {
   visible: { opacity: 1, y: 0 },
 };
 
-// Scroll-reveal is disabled site-wide per client feedback, without removing
-// it from any of the sections it was wired into (EngineeringProcess,
-// SolutionsGrid, WhyChooseUs, Leadership, TechnologyBrands, ProjectGrid,
-// SolutionDetail) — flip this back to `true` to re-enable the fade/slide-up
-// animation everywhere at once.
-const ANIMATIONS_ENABLED = false;
+// Re-enabled site-wide per client request for a "dynamic look" — was
+// previously turned off (without unwiring it from any section) per earlier
+// feedback. Flip back to `false` to disable the fade/slide-up animation
+// everywhere at once without touching every section that uses it.
+const ANIMATIONS_ENABLED = true;
 
 // Simple, consistent scroll-reveal used across sections sitewide (engineering
 // process steps, solution/strength/project cards, etc.) — fade + slide up
