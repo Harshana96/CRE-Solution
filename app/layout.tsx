@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 import { Manrope, IBM_Plex_Sans } from "next/font/google";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import SocialSidebar from "@/components/layout/SocialSidebar";
 import { company } from "@/data/company";
 import "./globals.css";
 
@@ -65,6 +66,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <Header />
         <main className="flex-1">{children}</main>
         <Footer />
+        <SocialSidebar />
       </body>
     </html>
   );
