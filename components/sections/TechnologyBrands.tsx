@@ -95,20 +95,20 @@ function BrandRow({
           <h3 className="sr-only">{brand.name}</h3>
 
           {brand.logo ? (
-            <div className="inline-flex h-24 items-center rounded-2xl border border-brand-line bg-white px-7 shadow-[0_20px_40px_-28px_rgba(11,15,20,0.4)] sm:h-28 sm:px-8">
-              <div className="relative h-12 w-44 sm:h-14 sm:w-52">
+            <div className="inline-flex h-36 items-center rounded-2xl border border-brand-line bg-white px-8 shadow-[0_20px_40px_-28px_rgba(11,15,20,0.4)] sm:h-44 sm:px-10">
+              <div className="relative h-20 w-64 sm:h-28 sm:w-80">
                 <Image
                   src={brand.logo}
                   alt={`${brand.name} logo`}
                   fill
-                  sizes="208px"
+                  sizes="320px"
                   className="object-contain object-left"
                 />
               </div>
             </div>
           ) : (
-            <div className="inline-flex h-24 items-center rounded-2xl border border-brand-line bg-white px-7 shadow-[0_20px_40px_-28px_rgba(11,15,20,0.4)] sm:h-28 sm:px-8">
-              <span className="text-xl font-bold text-brand-ink">{brand.name}</span>
+            <div className="inline-flex h-36 items-center rounded-2xl border border-brand-line bg-white px-8 shadow-[0_20px_40px_-28px_rgba(11,15,20,0.4)] sm:h-44 sm:px-10">
+              <span className="text-2xl font-bold text-brand-ink">{brand.name}</span>
             </div>
           )}
 
