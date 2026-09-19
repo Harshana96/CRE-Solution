@@ -2,6 +2,7 @@
 
 import { useEffect, useState, type ReactNode } from "react";
 import Image from "next/image";
+import { motion } from "framer-motion";
 import Container from "@/components/ui/Container";
 
 interface PageHeroProps {
@@ -93,20 +94,55 @@ export default function PageHero({
         className="absolute -right-24 -top-24 h-96 w-96 rounded-full bg-brand-red/20 blur-3xl"
       />
       <Container className="relative">
-        <div className="flex items-center gap-3 text-xs font-bold uppercase tracking-[0.18em] text-brand-red">
+        <motion.div
+          initial={{ opacity: 0, y: 18 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+          className="flex items-center gap-3 text-xs font-bold uppercase tracking-[0.18em] text-brand-red"
+        >
           <span className="h-[3px] w-6 rounded-full bg-brand-red" />
           {eyebrow}
-        </div>
-        <h1 className="mt-5 max-w-3xl text-4xl font-extrabold leading-[1.08] sm:text-5xl lg:text-6xl">
+        </motion.div>
+
+        <motion.h1
+          initial={{ opacity: 0, y: 22 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.65, ease: "easeOut", delay: 0.08 }}
+          className="mt-5 max-w-3xl text-4xl font-extrabold leading-[1.08] sm:text-5xl lg:text-6xl"
+        >
           {title}
-        </h1>
+        </motion.h1>
+
         {description && (
-          <p className="mt-6 max-w-2xl text-lg leading-relaxed text-white/70">{description}</p>
+          <motion.p
+            initial={{ opacity: 0, y: 22 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.65, ease: "easeOut", delay: 0.16 }}
+            className="mt-6 max-w-2xl text-lg leading-relaxed text-white/70"
+          >
+            {description}
+          </motion.p>
         )}
-        {children}
+
+        {children && (
+          <motion.div
+            initial={{ opacity: 0, y: 22 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.65, ease: "easeOut", delay: 0.24 }}
+          >
+            {children}
+          </motion.div>
+        )}
 
         {images.length > 1 && (
-          <div className="mt-10 flex items-center gap-2" role="tablist" aria-label="Background photo">
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease: "easeOut", delay: 0.32 }}
+            className="mt-10 flex items-center gap-2"
+            role="tablist"
+            aria-label="Background photo"
+          >
             {images.map((src, i) => (
               <button
                 key={src}
@@ -120,7 +156,7 @@ export default function PageHero({
                 }`}
               />
             ))}
-          </div>
+          </motion.div>
         )}
       </Container>
     </section>
