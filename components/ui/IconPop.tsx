@@ -53,7 +53,11 @@ export default function IconPop({
         },
       }}
     >
-      <span className="inline-flex transition-transform duration-300 ease-out group-hover:scale-125 group-hover:-rotate-6">
+      {/* Bounce/overshoot easing (not a flat ease-out) so the hover reaction
+          reads the same as the scroll pop-in's spring — CSS transitions
+          can't run real spring physics, but this curve overshoots past the
+          target and settles back the same way. */}
+      <span className="inline-flex transition-transform duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] group-hover:scale-125 group-hover:-rotate-8">
         {children}
       </span>
     </motion.div>
