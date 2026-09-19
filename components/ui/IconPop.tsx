@@ -8,23 +8,17 @@ const variants: Variants = {
   // Rotate overshoots past 0 and settles back — a small wiggle instead of a
   // flat fade-in, so the icon reads as "animated" rather than just appearing.
   visible: { opacity: 1, scale: 1, rotate: [-24, 12, -6, 3, 0] },
-  // Not triggered by IconPop itself — inherited from the nearest ancestor
-  // motion element that sets `whileHover="hover"` (Reveal does this site-wide),
-  // so hovering anywhere in the surrounding card/section animates the icon,
-  // not just the small icon area itself. Variant-level `transition` overrides
-  // the shared per-property transition below, just for this gesture.
-  hover: {
-    scale: 1.15,
-    rotate: -8,
-    transition: { type: "spring", stiffness: 320, damping: 12 },
-  },
 };
 
-// Scroll-triggered "pop in + settle wiggle" used for icon badges site-wide —
-// separate from Reveal (whole-block fade/slide): this only wraps the small
-// icon badge itself, so as each one scrolls into view it springs in and
-// gives a couple of small back-and-forth turns before settling, rather than
-// just fading. Falls back to no motion when reduced motion is requested.
+// Scroll-triggered "pop in + settle wiggle" for icon badges site-wide, plus a
+// hover reaction driven by plain CSS `group`/`group-hover` (not Framer's
+// whileHover) on an inner span — the outer motion.div owns the scroll
+// animation's transform, so a second transform-driven trigger on the SAME
+// element (e.g. Framer's whileHover, or a CSS hover class on this element)
+// would fight it via inline-style vs stylesheet specificity and silently do
+// nothing. Putting the hover transform on a separate inner element sidesteps
+// that entirely. The ancestor card/section just needs a `group` class
+// somewhere above this (see WhyChooseUs, SolutionsGrid, etc.).
 export default function IconPop({
   children,
   delay = 0,
@@ -58,9 +52,10 @@ export default function IconPop({
           delay: reduceMotion ? 0 : delay,
         },
       }}
-      whileTap={reduceMotion ? undefined : { scale: 0.92 }}
     >
-      {children}
+      <span className="inline-flex transition-transform duration-300 ease-out group-hover:scale-125 group-hover:-rotate-6">
+        {children}
+      </span>
     </motion.div>
   );
 }

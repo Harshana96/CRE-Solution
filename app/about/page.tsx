@@ -43,14 +43,14 @@ export default function AboutPage() {
       <section className="bg-brand-light py-24">
         <Container>
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-            <Reveal className="rounded-xl border border-brand-line bg-white p-8">
+            <Reveal className="group rounded-xl border border-brand-line bg-white p-8">
               <IconPop className="flex h-12 w-12 items-center justify-center rounded-full bg-brand-red-soft">
                 <Target size={22} className="text-brand-red" />
               </IconPop>
               <h3 className="mt-5 text-xl font-bold text-brand-ink">Our Mission</h3>
               <p className="mt-3 text-brand-muted">{company.mission}</p>
             </Reveal>
-            <Reveal delay={0.1} className="rounded-xl border border-brand-line bg-white p-8">
+            <Reveal delay={0.1} className="group rounded-xl border border-brand-line bg-white p-8">
               <IconPop delay={0.08} className="flex h-12 w-12 items-center justify-center rounded-full bg-brand-red-soft">
                 <Eye size={22} className="text-brand-red" />
               </IconPop>

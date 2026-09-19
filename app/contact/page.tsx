@@ -32,7 +32,7 @@ export default function ContactPage() {
               const Icon = iconMap[s.icon];
               return (
                 <Reveal key={s.slug} delay={i * 0.06}>
-                  <div className="flex flex-col items-center gap-3 rounded-xl border border-brand-line bg-brand-light p-6 text-center">
+                  <div className="group flex flex-col items-center gap-3 rounded-xl border border-brand-line bg-brand-light p-6 text-center">
                     <IconPop delay={i * 0.06}>
                       <Icon size={22} className="text-brand-red" />
                     </IconPop>

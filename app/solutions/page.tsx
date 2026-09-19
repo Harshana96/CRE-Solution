@@ -43,7 +43,7 @@ export default function SolutionsOverviewPage() {
                 <Reveal
                   key={solution.slug}
                   delay={i * 0.08}
-                  className="flex flex-col rounded-xl border border-brand-line bg-white p-9"
+                  className="group flex flex-col rounded-xl border border-brand-line bg-white p-9"
                 >
                   <div className="flex items-center justify-between">
                     <IconPop delay={i * 0.08} className="flex h-14 w-14 items-center justify-center rounded-lg bg-brand-ink">

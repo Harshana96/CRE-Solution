@@ -53,7 +53,7 @@ export default function PageHero({
   }, [images.length]);
 
   return (
-    <section className="relative flex min-h-[560px] flex-col justify-end overflow-hidden bg-brand-ink pb-20 pt-40 text-white">
+    <section className="group relative flex min-h-[560px] flex-col justify-end overflow-hidden bg-brand-ink pb-20 pt-40 text-white">
       {images.map((src, i) => (
         <Image
           key={src}

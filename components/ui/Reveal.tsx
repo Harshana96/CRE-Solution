@@ -38,11 +38,6 @@ export default function Reveal({
       className={className}
       initial={reduceMotion ? false : "hidden"}
       whileInView="visible"
-      // Reveal itself has no "hover" variant, so this doesn't visually
-      // affect Reveal — it only propagates the hover gesture down to any
-      // nested motion component (e.g. IconPop) that does define one, so
-      // hovering anywhere in this card animates an icon inside it.
-      whileHover="hover"
       viewport={{ once: true, margin: "-60px" }}
       variants={variants}
       transition={{

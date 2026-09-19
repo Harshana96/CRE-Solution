@@ -27,7 +27,7 @@ export default function WhyChooseUs({ compact = false }: { compact?: boolean }) 
           {strengths.map((item, i) => {
             const Icon = iconMap[item.icon];
             return (
-              <Reveal key={item.title} delay={(i % 4) * 0.06} className="bg-white">
+              <Reveal key={item.title} delay={(i % 4) * 0.06} className="group bg-white">
                 <div className="flex h-full flex-col gap-4 p-7">
                   <IconPop delay={(i % 4) * 0.06} className="flex h-11 w-11 items-center justify-center rounded-full bg-brand-red-soft">
                     <Icon size={20} className="text-brand-red" />
