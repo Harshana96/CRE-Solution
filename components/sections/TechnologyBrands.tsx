@@ -67,11 +67,13 @@ function BrandRow({
   category,
   tagline,
   reverse,
+  index,
 }: {
   brand: TechnologyBrand;
   category: string;
   tagline: string;
   reverse: boolean;
+  index: number;
 }) {
   const Icon = categoryIcon[category] ?? Zap;
 
@@ -81,24 +83,41 @@ function BrandRow({
         reverse ? "md:[&>*:first-child]:order-2" : ""
       }`}
     >
-      <div className="max-w-md">
-        {brand.logo && (
-          <div className="relative mb-5 h-24 w-64 sm:h-28 sm:w-72">
-            <Image
-              src={brand.logo}
-              alt={`${brand.name} logo`}
-              fill
-              sizes="288px"
-              className="object-contain object-left"
-            />
-          </div>
-        )}
-        <h3 className="text-lg font-bold text-brand-ink sm:text-xl">{brand.name}</h3>
-        <p className="mt-3 text-base leading-relaxed text-brand-muted">{tagline}</p>
-        <span className="mt-6 inline-flex items-center gap-2 rounded-full border border-brand-line px-4 py-2 text-xs font-bold uppercase tracking-wide text-brand-ink">
-          <Icon size={14} className="text-brand-red" />
-          {category}
+      <div className="relative max-w-md">
+        <span
+          aria-hidden
+          className="pointer-events-none absolute -top-10 -left-1 select-none text-[5.5rem] font-black leading-none text-brand-light sm:text-[6.5rem]"
+        >
+          {String(index + 1).padStart(2, "0")}
         </span>
+
+        <div className="relative">
+          <h3 className="sr-only">{brand.name}</h3>
+
+          {brand.logo ? (
+            <div className="inline-flex h-24 items-center rounded-2xl border border-brand-line bg-white px-7 shadow-[0_20px_40px_-28px_rgba(11,15,20,0.4)] sm:h-28 sm:px-8">
+              <div className="relative h-12 w-44 sm:h-14 sm:w-52">
+                <Image
+                  src={brand.logo}
+                  alt={`${brand.name} logo`}
+                  fill
+                  sizes="208px"
+                  className="object-contain object-left"
+                />
+              </div>
+            </div>
+          ) : (
+            <div className="inline-flex h-24 items-center rounded-2xl border border-brand-line bg-white px-7 shadow-[0_20px_40px_-28px_rgba(11,15,20,0.4)] sm:h-28 sm:px-8">
+              <span className="text-xl font-bold text-brand-ink">{brand.name}</span>
+            </div>
+          )}
+
+          <p className="mt-5 text-base leading-relaxed text-brand-muted">{tagline}</p>
+          <span className="mt-6 inline-flex items-center gap-2 rounded-full border border-brand-line px-4 py-2 text-xs font-bold uppercase tracking-wide text-brand-ink">
+            <Icon size={14} className="text-brand-red" />
+            {category}
+          </span>
+        </div>
       </div>
 
       <div className="mx-auto w-full max-w-xs sm:max-w-sm">
@@ -137,6 +156,7 @@ export default function TechnologyBrands() {
                   category={category}
                   tagline={tagline}
                   reverse={globalIndex % 2 === 1}
+                  index={globalIndex}
                 />
               </Reveal>
             </div>
