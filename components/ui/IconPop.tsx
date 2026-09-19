@@ -8,6 +8,16 @@ const variants: Variants = {
   // Rotate overshoots past 0 and settles back — a small wiggle instead of a
   // flat fade-in, so the icon reads as "animated" rather than just appearing.
   visible: { opacity: 1, scale: 1, rotate: [-24, 12, -6, 3, 0] },
+  // Not triggered by IconPop itself — inherited from the nearest ancestor
+  // motion element that sets `whileHover="hover"` (Reveal does this site-wide),
+  // so hovering anywhere in the surrounding card/section animates the icon,
+  // not just the small icon area itself. Variant-level `transition` overrides
+  // the shared per-property transition below, just for this gesture.
+  hover: {
+    scale: 1.15,
+    rotate: -8,
+    transition: { type: "spring", stiffness: 320, damping: 12 },
+  },
 };
 
 // Scroll-triggered "pop in + settle wiggle" used for icon badges site-wide —
@@ -48,11 +58,6 @@ export default function IconPop({
           delay: reduceMotion ? 0 : delay,
         },
       }}
-      whileHover={
-        reduceMotion
-          ? undefined
-          : { scale: 1.15, rotate: -8, transition: { type: "spring", stiffness: 320, damping: 12 } }
-      }
       whileTap={reduceMotion ? undefined : { scale: 0.92 }}
     >
       {children}
