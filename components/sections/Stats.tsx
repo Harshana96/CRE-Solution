@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useInView } from "framer-motion";
 import Container from "@/components/ui/Container";
+import Reveal from "@/components/ui/Reveal";
 import { company } from "@/data/company";
 import { cn } from "@/lib/utils";
 
@@ -47,31 +48,32 @@ export default function Stats({ tone = "light" }: { tone?: "light" | "dark" }) {
     <section className={cn("py-16", isDark ? "bg-brand-ink" : "bg-brand-light")}>
       <Container>
         <div className="grid grid-cols-2 gap-8 lg:grid-cols-4 lg:gap-6">
-          {company.stats.map((stat) => (
-            <div
-              key={stat.label}
-              className={cn(
-                "border-l-2 pl-5",
-                isDark ? "border-brand-red/60" : "border-brand-red"
-              )}
-            >
+          {company.stats.map((stat, i) => (
+            <Reveal key={stat.label} delay={i * 0.08}>
               <div
                 className={cn(
-                  "font-heading text-4xl font-extrabold sm:text-5xl",
-                  isDark ? "text-white" : "text-brand-ink"
+                  "border-l-2 pl-5",
+                  isDark ? "border-brand-red/60" : "border-brand-red"
                 )}
               >
-                <Counter value={stat.value} />
+                <div
+                  className={cn(
+                    "font-heading text-4xl font-extrabold sm:text-5xl",
+                    isDark ? "text-white" : "text-brand-ink"
+                  )}
+                >
+                  <Counter value={stat.value} />
+                </div>
+                <div
+                  className={cn(
+                    "mt-2 text-xs font-semibold uppercase tracking-[0.1em]",
+                    isDark ? "text-white/55" : "text-brand-muted"
+                  )}
+                >
+                  {stat.label}
+                </div>
               </div>
-              <div
-                className={cn(
-                  "mt-2 text-xs font-semibold uppercase tracking-[0.1em]",
-                  isDark ? "text-white/55" : "text-brand-muted"
-                )}
-              >
-                {stat.label}
-              </div>
-            </div>
+            </Reveal>
           ))}
         </div>
       </Container>

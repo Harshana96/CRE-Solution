@@ -3,6 +3,8 @@ import { Phone, Mail, MapPin, Globe, Sun, BatteryCharging, PlugZap, Zap } from "
 import PageHero from "@/components/sections/PageHero";
 import ContactForm from "@/components/sections/ContactForm";
 import Container from "@/components/ui/Container";
+import Reveal from "@/components/ui/Reveal";
+import IconPop from "@/components/ui/IconPop";
 import { contact } from "@/data/contact";
 import { solutions } from "@/data/solutions";
 
@@ -26,24 +28,25 @@ export default function ContactPage() {
       <section className="bg-white py-24">
         <Container>
           <div className="mb-16 grid grid-cols-2 gap-4 sm:grid-cols-4">
-            {solutions.map((s) => {
+            {solutions.map((s, i) => {
               const Icon = iconMap[s.icon];
               return (
-                <div
-                  key={s.slug}
-                  className="flex flex-col items-center gap-3 rounded-xl border border-brand-line bg-brand-light p-6 text-center"
-                >
-                  <Icon size={22} className="text-brand-red" />
-                  <span className="text-xs font-bold uppercase tracking-wide text-brand-ink">
-                    {s.shortTitle}
-                  </span>
-                </div>
+                <Reveal key={s.slug} delay={i * 0.06}>
+                  <div className="flex flex-col items-center gap-3 rounded-xl border border-brand-line bg-brand-light p-6 text-center">
+                    <IconPop delay={i * 0.06}>
+                      <Icon size={22} className="text-brand-red" />
+                    </IconPop>
+                    <span className="text-xs font-bold uppercase tracking-wide text-brand-ink">
+                      {s.shortTitle}
+                    </span>
+                  </div>
+                </Reveal>
               );
             })}
           </div>
 
           <div className="grid grid-cols-1 gap-14 lg:grid-cols-[1fr_1.2fr]">
-            <div>
+            <Reveal>
               <h2 className="text-2xl font-bold text-brand-ink">Contact Information</h2>
               <ul className="mt-7 flex flex-col gap-6">
                 <li className="flex items-start gap-4">
@@ -106,11 +109,11 @@ export default function ContactPage() {
               <p className="mt-8 text-sm font-semibold uppercase tracking-wide text-brand-muted">
                 {contact.serviceArea}
               </p>
-            </div>
+            </Reveal>
 
-            <div className="rounded-xl border border-brand-line bg-brand-light p-8 sm:p-10">
+            <Reveal delay={0.1} className="rounded-xl border border-brand-line bg-brand-light p-8 sm:p-10">
               <ContactForm />
-            </div>
+            </Reveal>
           </div>
         </Container>
       </section>

@@ -1,5 +1,6 @@
 import Container from "@/components/ui/Container";
 import SectionHeading from "@/components/ui/SectionHeading";
+import Reveal from "@/components/ui/Reveal";
 // Previous flat-color hover map, kept in the codebase for future reuse —
 // see components/sections/SriLankaMap.tsx. Swapped out below for the
 // zoomable 3D-pin version per client request.
@@ -12,7 +13,7 @@ export default function SriLankaReach() {
     <section className="bg-brand-light py-24">
       <Container>
         <div>
-          <div className="max-w-2xl">
+          <Reveal className="max-w-2xl">
             <SectionHeading
               eyebrow="Project Reach"
               title={company.reachSubStatement}
@@ -22,11 +23,11 @@ export default function SriLankaReach() {
               <span className="h-2 w-2 rounded-full bg-brand-red" />
               Zoom in to see every completed project, district by district
             </div>
-          </div>
+          </Reveal>
 
-          <div className="mt-12 rounded-xl border border-brand-line bg-white p-8">
+          <Reveal delay={0.12} className="mt-12 rounded-xl border border-brand-line bg-white p-8">
             <SriLankaMapPins />
-          </div>
+          </Reveal>
         </div>
       </Container>
     </section>

@@ -4,8 +4,8 @@ import { motion, useReducedMotion, type Variants } from "framer-motion";
 import type { ReactNode } from "react";
 
 const variants: Variants = {
-  hidden: { opacity: 0, y: 18 },
-  visible: { opacity: 1, y: 0 },
+  hidden: { opacity: 0, y: 32, scale: 0.97 },
+  visible: { opacity: 1, y: 0, scale: 1 },
 };
 
 // Re-enabled site-wide per client request for a "dynamic look" — was
@@ -40,7 +40,11 @@ export default function Reveal({
       whileInView="visible"
       viewport={{ once: true, margin: "-60px" }}
       variants={variants}
-      transition={{ duration: reduceMotion ? 0 : 0.5, ease: "easeOut", delay: reduceMotion ? 0 : delay }}
+      transition={{
+        duration: reduceMotion ? 0 : 0.7,
+        ease: [0.22, 1, 0.36, 1],
+        delay: reduceMotion ? 0 : delay,
+      }}
     >
       {children}
     </motion.div>
