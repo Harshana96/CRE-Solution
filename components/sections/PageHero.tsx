@@ -100,7 +100,12 @@ export default function PageHero({
           transition={{ duration: 0.6, ease: "easeOut" }}
           className="flex items-center gap-3 text-xs font-bold uppercase tracking-[0.18em] text-brand-red"
         >
-          <span className="h-[3px] w-6 rounded-full bg-brand-red" />
+          <motion.span
+            className="h-[3px] w-6 origin-left rounded-full bg-brand-red"
+            initial={{ scaleX: 0 }}
+            animate={{ scaleX: 1 }}
+            transition={{ duration: 0.5, ease: "easeOut", delay: 0.3 }}
+          />
           {eyebrow}
         </motion.div>
 

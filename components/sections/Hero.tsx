@@ -39,7 +39,12 @@ export default function Hero() {
           transition={{ duration: 0.6, ease: "easeOut" }}
           className="flex items-center gap-3 text-xs font-bold uppercase tracking-[0.2em] text-brand-red"
         >
-          <span className="h-[3px] w-7 rounded-full bg-brand-red" />
+          <motion.span
+            className="h-[3px] w-7 origin-left rounded-full bg-brand-red"
+            initial={{ scaleX: 0 }}
+            animate={{ scaleX: 1 }}
+            transition={{ duration: 0.5, ease: "easeOut", delay: 0.3 }}
+          />
           {company.fullName} · Est. {company.founded}
         </motion.div>
 
