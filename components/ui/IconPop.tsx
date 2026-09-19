@@ -57,7 +57,7 @@ export default function IconPop({
           reads the same as the scroll pop-in's spring — CSS transitions
           can't run real spring physics, but this curve overshoots past the
           target and settles back the same way. */}
-      <span className="inline-flex transition-transform duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] group-hover:scale-125 group-hover:-rotate-8">
+      <span className="inline-flex transition-transform duration-[600ms] ease-[cubic-bezier(0.34,1.9,0.64,1)] group-hover:scale-[1.35] group-hover:-rotate-12">
         {children}
       </span>
     </motion.div>
