@@ -83,25 +83,27 @@ function BrandRow({
     >
       <div className="max-w-md">
         {brand.logo && (
-          <div className="relative mb-6 h-12 w-40">
+          <div className="relative mb-5 h-24 w-64 sm:h-28 sm:w-72">
             <Image
               src={brand.logo}
               alt={`${brand.name} logo`}
               fill
-              sizes="160px"
+              sizes="288px"
               className="object-contain object-left"
             />
           </div>
         )}
-        <h3 className="text-3xl font-extrabold text-brand-ink sm:text-4xl">{brand.name}</h3>
-        <p className="mt-4 text-base leading-relaxed text-brand-muted">{tagline}</p>
+        <h3 className="text-lg font-bold text-brand-ink sm:text-xl">{brand.name}</h3>
+        <p className="mt-3 text-base leading-relaxed text-brand-muted">{tagline}</p>
         <span className="mt-6 inline-flex items-center gap-2 rounded-full border border-brand-line px-4 py-2 text-xs font-bold uppercase tracking-wide text-brand-ink">
           <Icon size={14} className="text-brand-red" />
           {category}
         </span>
       </div>
 
-      <ProductPanel brand={brand} />
+      <div className="mx-auto w-full max-w-xs sm:max-w-sm">
+        <ProductPanel brand={brand} />
+      </div>
     </div>
   );
 }
