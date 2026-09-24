@@ -12,11 +12,12 @@ export default function Hero() {
     <section className="relative isolate flex min-h-[92vh] items-center overflow-hidden bg-brand-light pt-24 text-brand-ink">
       {/* Client-supplied cover image (AI-generated, not a photo of an actual
           CRE Solutions installation — unlike the real project photos used
-          elsewhere on the site). Washed light (not darkened) so it stays
-          airy and the dark headline/body text and logo above it both stay
-          legible. */}
+          elsewhere on the site) showing all four solution areas (solar,
+          battery storage, EV charging, electrical) in one themed shot.
+          Washed light (not darkened) so it stays airy and the dark
+          headline/body text and logo above it both stay legible. */}
       <Image
-        src="/images/hero/rooftop-solar-sunrise.jpg"
+        src="/images/hero/four-solutions-cover.jpg"
         alt=""
         fill
         priority
