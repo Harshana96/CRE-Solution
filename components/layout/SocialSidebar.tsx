@@ -74,7 +74,7 @@ const links = [
 export default function SocialSidebar() {
   return (
     <div className="fixed right-0 top-1/2 z-40 hidden -translate-y-1/2 lg:block">
-      <div className="flex flex-col overflow-hidden rounded-l-2xl border border-r-0 border-white/10 bg-brand-ink shadow-[0_16px_40px_-16px_rgba(11,15,20,0.5)]">
+      <div className="flex flex-col overflow-hidden rounded-l-2xl border border-r-0 border-brand-line bg-white shadow-[0_16px_40px_-16px_rgba(11,15,20,0.25)]">
         <span className="h-1 w-full bg-brand-red" aria-hidden />
         {links.map(({ name, href, Icon, ...rest }) => {
           const isLive = "live" in rest && rest.live;
@@ -86,14 +86,14 @@ export default function SocialSidebar() {
               rel={isLive ? "noreferrer" : undefined}
               aria-label={name}
               title={name}
-              className="group relative flex h-11 w-11 items-center justify-center text-white/70 transition-all duration-200 hover:w-14 hover:bg-brand-red hover:text-white"
+              className="group relative flex h-16 w-16 items-center justify-center border-b border-brand-line text-brand-red transition-all duration-200 last:border-b-0 hover:w-[4.5rem] hover:bg-brand-red hover:text-white"
             >
-              <Icon width={17} height={17} className="transition-transform duration-200 group-hover:scale-110" />
+              <Icon width={26} height={26} className="transition-transform duration-200 group-hover:scale-110" />
               {isLive && (
-                <span className="absolute right-1.5 top-1.5 h-1.5 w-1.5 animate-ping rounded-full bg-emerald-400" />
+                <span className="absolute right-2 top-2 h-2 w-2 animate-ping rounded-full bg-emerald-400" />
               )}
               {isLive && (
-                <span className="absolute right-1.5 top-1.5 h-1.5 w-1.5 rounded-full bg-emerald-400" />
+                <span className="absolute right-2 top-2 h-2 w-2 rounded-full bg-emerald-400" />
               )}
             </a>
           );
