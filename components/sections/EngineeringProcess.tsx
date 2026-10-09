@@ -26,12 +26,17 @@ export default function EngineeringProcess({
   const isDark = tone === "dark";
   const [hovered, setHovered] = useState(false);
 
-  const stepCount = engineeringProcess.length;
-  // Line starts just after circle 1 begins, and finishes exactly as the
-  // last circle begins — so its progress always matches the circle it's
-  // currently passing under. Only meaningful on the xl single-row layout.
+  // Two mirrored rows of four: steps 1-4 left-to-right, then 8-5
+  // left-to-right underneath, so the sequence reads as one continuous
+  // snake path instead of a single row of eight.
+  const half = Math.ceil(engineeringProcess.length / 2);
+  const rows = [engineeringProcess.slice(0, half), engineeringProcess.slice(half).slice().reverse()];
+
+  // Line starts just after a row's first circle begins, and finishes
+  // exactly as that row's last circle begins — so its progress always
+  // matches the circle it's currently passing under.
   const lineDelay = STEP_DELAY * 0.3;
-  const lineDuration = STEP_DELAY * (stepCount - 1);
+  const lineDuration = STEP_DELAY * (half - 1);
 
   return (
     <section className={cn("relative overflow-hidden py-24", isDark ? "bg-brand-ink" : "bg-brand-light")}>
@@ -70,70 +75,77 @@ export default function EngineeringProcess({
         </Reveal>
 
         <div
-          className="relative mt-14 grid grid-cols-2 gap-x-5 gap-y-10 sm:grid-cols-4 xl:grid-cols-8"
+          className="mt-14 space-y-10"
           onMouseEnter={() => setHovered(true)}
           onMouseLeave={() => setHovered(false)}
         >
-          <motion.div
-            aria-hidden
-            className={cn(
-              "absolute left-0 right-0 top-[26px] hidden h-px origin-left xl:block",
-              isDark ? "bg-white/20" : "bg-brand-red/40"
-            )}
-            initial={false}
-            animate={{ scaleX: hovered ? 1 : 0 }}
-            transition={
-              hovered
-                ? { duration: lineDuration, delay: lineDelay, ease: "linear" }
-                : { duration: 0.15, ease: "easeIn" }
-            }
-          />
-
-          {engineeringProcess.map((step, i) => (
-            <Reveal key={step.number} className="relative">
-              <div className="relative z-10 h-[52px] w-[52px]">
-                <svg viewBox="0 0 52 52" className="absolute inset-0 h-full w-full -rotate-90">
-                  <circle
-                    cx="26"
-                    cy="26"
-                    r="23"
-                    fill={isDark ? "#0B0F14" : "#FFFFFF"}
-                    stroke={isDark ? "rgba(255,255,255,0.15)" : "#E4E8EA"}
-                    strokeWidth="2.5"
-                  />
-                  <motion.circle
-                    cx="26"
-                    cy="26"
-                    r="23"
-                    fill="none"
-                    stroke="#E30613"
-                    strokeWidth="2.5"
-                    strokeLinecap="round"
-                    initial={false}
-                    animate={{ pathLength: hovered ? 1 : 0 }}
-                    transition={
-                      hovered
-                        ? { duration: CIRCLE_DRAW_DURATION, delay: i * STEP_DELAY, ease: "easeInOut" }
-                        : { duration: 0.15, ease: "easeIn" }
-                    }
-                  />
-                </svg>
-                <span className="absolute inset-0 flex items-center justify-center font-heading text-base font-bold text-brand-red">
-                  {step.number}
-                </span>
-              </div>
-              <h3
+          {rows.map((rowSteps, rowIndex) => (
+            <div
+              key={rowIndex}
+              className="relative grid grid-cols-2 gap-x-5 gap-y-10 sm:grid-cols-4"
+            >
+              <motion.div
+                aria-hidden
                 className={cn(
-                  "mt-4 text-sm font-bold uppercase tracking-wide",
-                  isDark ? "text-white" : "text-brand-ink"
+                  "absolute left-0 right-0 top-[26px] hidden h-px origin-left sm:block",
+                  isDark ? "bg-white/20" : "bg-brand-red/40"
                 )}
-              >
-                {step.title}
-              </h3>
-              <p className={cn("mt-1.5 text-xs leading-relaxed", isDark ? "text-white/55" : "text-brand-muted")}>
-                {step.description}
-              </p>
-            </Reveal>
+                initial={false}
+                animate={{ scaleX: hovered ? 1 : 0 }}
+                transition={
+                  hovered
+                    ? { duration: lineDuration, delay: lineDelay, ease: "linear" }
+                    : { duration: 0.15, ease: "easeIn" }
+                }
+              />
+
+              {rowSteps.map((step, i) => (
+                <Reveal key={step.number} className="relative">
+                  <div className="relative z-10 h-[52px] w-[52px]">
+                    <svg viewBox="0 0 52 52" className="absolute inset-0 h-full w-full -rotate-90">
+                      <circle
+                        cx="26"
+                        cy="26"
+                        r="23"
+                        fill={isDark ? "#0B0F14" : "#FFFFFF"}
+                        stroke={isDark ? "rgba(255,255,255,0.15)" : "#E4E8EA"}
+                        strokeWidth="2.5"
+                      />
+                      <motion.circle
+                        cx="26"
+                        cy="26"
+                        r="23"
+                        fill="none"
+                        stroke="#E30613"
+                        strokeWidth="2.5"
+                        strokeLinecap="round"
+                        initial={false}
+                        animate={{ pathLength: hovered ? 1 : 0 }}
+                        transition={
+                          hovered
+                            ? { duration: CIRCLE_DRAW_DURATION, delay: i * STEP_DELAY, ease: "easeInOut" }
+                            : { duration: 0.15, ease: "easeIn" }
+                        }
+                      />
+                    </svg>
+                    <span className="absolute inset-0 flex items-center justify-center font-heading text-base font-bold text-brand-red">
+                      {step.number}
+                    </span>
+                  </div>
+                  <h3
+                    className={cn(
+                      "mt-4 text-sm font-bold uppercase tracking-wide",
+                      isDark ? "text-white" : "text-brand-ink"
+                    )}
+                  >
+                    {step.title}
+                  </h3>
+                  <p className={cn("mt-1.5 text-xs leading-relaxed", isDark ? "text-white/55" : "text-brand-muted")}>
+                    {step.description}
+                  </p>
+                </Reveal>
+              ))}
+            </div>
           ))}
         </div>
       </Container>
