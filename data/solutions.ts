@@ -112,7 +112,7 @@ export const solutions: Solution[] = [
         description: "DC fast chargers (30 / 40 / 60 kW) and 120 kW dual-gun units for commercial sites.",
       },
     ],
-    image: null,
+    image: "/images/solutions/ev-charging-tile.jpg",
   },
   {
     slug: "electrical",
