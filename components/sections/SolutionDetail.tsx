@@ -1,4 +1,8 @@
-import { Sun, BatteryCharging, PlugZap, Zap, Check } from "lucide-react";
+import { Check } from "lucide-react";
+import Sun from "@/components/icons/SolarPanelIcon";
+import PlugZap from "@/components/icons/EvChargingIcon";
+import BatteryCharging from "@/components/icons/BatteryStorageIcon";
+import Zap from "@/components/icons/ElectricalIcon";
 import PageHero from "@/components/sections/PageHero";
 import EngineeringProcess from "@/components/sections/EngineeringProcess";
 import ContactCTA from "@/components/sections/ContactCTA";
@@ -22,7 +26,7 @@ export default function SolutionDetail({ slug }: { slug: SolutionSlug }) {
     <>
       <PageHero eyebrow={`Solution ${solution.number}`} title={solution.title} description={solution.heroSubline}>
         <IconPop className="mt-8 flex h-14 w-14 items-center justify-center rounded-lg bg-white/10">
-          <Icon size={26} className="text-brand-red" />
+          <Icon size={32} className="text-brand-red" />
         </IconPop>
       </PageHero>
 

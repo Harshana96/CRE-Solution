@@ -1,5 +1,9 @@
 import Link from "next/link";
-import { Sun, BatteryCharging, PlugZap, Zap, ArrowUpRight } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
+import Sun from "@/components/icons/SolarPanelIcon";
+import PlugZap from "@/components/icons/EvChargingIcon";
+import BatteryCharging from "@/components/icons/BatteryStorageIcon";
+import Zap from "@/components/icons/ElectricalIcon";
 import Container from "@/components/ui/Container";
 import SectionHeading from "@/components/ui/SectionHeading";
 import Reveal from "@/components/ui/Reveal";
@@ -33,7 +37,10 @@ export default function SolutionsGrid() {
                     delay={i * 0.08}
                     className="flex h-14 w-14 items-center justify-center rounded-lg bg-brand-ink transition-colors group-hover:bg-brand-red"
                   >
-                    <Icon size={26} className="text-brand-red group-hover:text-white" />
+                    <Icon
+                      size={32}
+                      className="text-brand-red transition-[filter] group-hover:text-white group-hover:brightness-0 group-hover:invert"
+                    />
                   </IconPop>
                   <div>
                     <span className="text-xs font-bold uppercase tracking-widest text-brand-red">

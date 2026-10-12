@@ -22,7 +22,7 @@ export default function ProjectsPage() {
         title="Recent Installations"
         description="A sample of completed projects across Sri Lanka's homes, restaurants, temples and industries."
       />
-      <Stats tone="light" />
+      <Stats tone="light" highlight />
       <section className="bg-white py-24">
         <Container>
           <Reveal>

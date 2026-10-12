@@ -1,20 +1,15 @@
+import type { ComponentType } from "react";
 import Image from "next/image";
-import {
-  ImageIcon,
-  Zap,
-  Sun,
-  BatteryCharging,
-  PlugZap,
-  Cable,
-  Layers,
-  ShieldCheck,
-} from "lucide-react";
+import { ImageIcon, Zap, Cable, Layers, ShieldCheck } from "lucide-react";
 import Container from "@/components/ui/Container";
 import SectionHeading from "@/components/ui/SectionHeading";
 import Reveal from "@/components/ui/Reveal";
+import Sun from "@/components/icons/SolarPanelIcon";
+import PlugZap from "@/components/icons/EvChargingIcon";
+import BatteryCharging from "@/components/icons/BatteryStorageIcon";
 import { technologyBrandGroups, type TechnologyBrand } from "@/data/technology";
 
-const categoryIcon: Record<string, typeof Zap> = {
+const categoryIcon: Record<string, ComponentType<{ size?: number; className?: string }>> = {
   "Inverter Brands": Zap,
   "Solar Panel Brands": Sun,
   "Battery Energy Storage": BatteryCharging,
@@ -112,7 +107,7 @@ function BrandRow({
 
           <p className="mt-6 text-lg leading-relaxed text-brand-muted">{tagline}</p>
           <span className="mt-6 inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-xs font-bold uppercase tracking-wide text-brand-ink shadow-sm">
-            <Icon size={14} className="text-brand-red" />
+            <Icon size={17} className="text-brand-red" />
             {category}
           </span>
         </div>

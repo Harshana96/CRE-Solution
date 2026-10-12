@@ -18,18 +18,18 @@ interface PageHeroProps {
   images?: string[];
 }
 
-// Default rotation — real CRE Solutions project photos, not stock imagery.
+// Default rotation — client-supplied marketing photos.
 // Used by any page that doesn't pass its own `images` prop.
 export const DEFAULT_PAGE_HERO_IMAGES = [
-  "/images/projects/trincomalee-mr-dewinda.jpg",
-  "/images/projects/mr-kamal-dambokka-kurunegala.jpg",
-  "/images/projects/kiyoto-coffee-mathale.jpg",
-  "/images/projects/kmee-restaurant-gampaha.jpg",
-  "/images/projects/dr-weerasinghe-kurunegala.jpg",
-  "/images/projects/mr-janitha-just-computer-kurunegala.jpg",
+  "/images/marketing/ev-charging-solutions-overview.jpg",
+  "/images/marketing/installation-highlights-1.jpg",
+  "/images/marketing/electrical-panels-highlights.jpg",
+  "/images/marketing/installation-highlights-2.jpg",
+  "/images/marketing/installation-highlights-3.jpg",
+  "/images/marketing/solar-pv-highlights.jpg",
 ];
 
-const ROTATE_INTERVAL_MS = 5000;
+const ROTATE_INTERVAL_MS = 2500;
 
 // Shared dark hero band used at the top of every inner page (About,
 // Solutions, Projects, Technology, Why CRE, Contact). Keeps the "Engineering
@@ -72,7 +72,7 @@ export default function PageHero({
   }, [images.length]);
 
   return (
-    <section className="group relative flex min-h-[560px] flex-col justify-end overflow-hidden bg-brand-ink pb-20 pt-40 text-white">
+    <section className="group relative flex min-h-[640px] flex-col justify-end overflow-hidden bg-brand-ink pb-20 pt-40 text-white">
       {images.map((src, i) =>
         revealed.has(i) ? (
           <Image
@@ -83,12 +83,12 @@ export default function PageHero({
             priority={i === 0}
             fetchPriority={i === 0 ? "high" : undefined}
             sizes="100vw"
-            // Sits under a heavy dark gradient at max 70% opacity, so a
+            // Sits under a lighter dark gradient at max 90% opacity, so a
             // lower quality is visually indistinguishable here but cuts
             // real bytes off what was the LCP image on every inner page.
             quality={55}
-            className="object-cover transition-opacity duration-[1500ms] ease-in-out"
-            style={{ opacity: i === index ? 0.7 : 0 }}
+            className="object-cover transition-opacity duration-[800ms] ease-in-out"
+            style={{ opacity: i === index ? 0.9 : 0 }}
           />
         ) : null
       )}
@@ -102,7 +102,7 @@ export default function PageHero({
         className="absolute inset-0"
         style={{
           background:
-            "linear-gradient(180deg, rgba(11,15,20,0.25) 0%, rgba(11,15,20,0.35) 35%, rgba(11,15,20,0.65) 65%, rgba(11,15,20,0.93) 100%)",
+            "linear-gradient(180deg, rgba(11,15,20,0.1) 0%, rgba(11,15,20,0.2) 35%, rgba(11,15,20,0.45) 65%, rgba(11,15,20,0.75) 100%)",
         }}
       />
       <div

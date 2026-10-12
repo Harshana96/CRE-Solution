@@ -23,19 +23,19 @@ export default function WhyChooseUs({ compact = false }: { compact?: boolean }) 
           />
         </Reveal>
 
-        <div className="mt-14 grid grid-cols-1 gap-px overflow-hidden rounded-xl border border-brand-line bg-brand-line sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-14 grid grid-cols-1 gap-px overflow-hidden rounded-xl border border-brand-line bg-brand-line sm:grid-cols-2">
           {strengths.map((item, i) => {
             const Icon = iconMap[item.icon];
             return (
-              <Reveal key={item.title} delay={(i % 4) * 0.06} className="group bg-white">
+              <Reveal key={item.title} delay={(i % 2) * 0.06} className="group bg-white">
                 <div className="flex h-full flex-col gap-4 p-7">
-                  <IconPop delay={(i % 4) * 0.06} className="flex h-11 w-11 items-center justify-center rounded-full bg-brand-red-soft">
-                    <Icon size={20} className="text-brand-red" />
+                  <IconPop delay={(i % 2) * 0.06} className="flex h-16 w-16 items-center justify-center rounded-full bg-brand-red-soft">
+                    <Icon size={30} className="text-brand-red" />
                   </IconPop>
-                  <h3 className="text-sm font-bold uppercase tracking-wide text-brand-ink">
+                  <h3 className="text-base font-bold uppercase tracking-wide text-brand-ink">
                     {item.title}
                   </h3>
-                  <p className="text-xs leading-relaxed text-brand-muted">{item.description}</p>
+                  <p className="text-sm leading-relaxed text-brand-muted">{item.description}</p>
                 </div>
               </Reveal>
             );

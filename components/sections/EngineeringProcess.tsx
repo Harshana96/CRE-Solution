@@ -87,7 +87,8 @@ export default function EngineeringProcess({
               <motion.div
                 aria-hidden
                 className={cn(
-                  "absolute left-0 right-0 top-[26px] hidden h-px origin-left sm:block",
+                  "absolute left-0 top-[26px] hidden h-px right-[calc((100%-3*1.25rem)/4-26px)] sm:block",
+                  rowIndex === 1 ? "origin-right" : "origin-left",
                   isDark ? "bg-white/20" : "bg-brand-red/40"
                 )}
                 initial={false}
@@ -99,7 +100,13 @@ export default function EngineeringProcess({
                 }
               />
 
-              {rowSteps.map((step, i) => (
+              {rowSteps.map((step, i) => {
+                // Bottom row reads 8-7-6-5 left to right, but should still
+                // animate in step order (5 then 6 then 7 then 8) — the
+                // opposite of its visual left-to-right order — so its
+                // circles draw right to left, matching the reversed line.
+                const drawIndex = rowIndex === 1 ? rowSteps.length - 1 - i : i;
+                return (
                 <Reveal key={step.number} className="relative">
                   <div className="relative z-10 h-[52px] w-[52px]">
                     <svg viewBox="0 0 52 52" className="absolute inset-0 h-full w-full -rotate-90">
@@ -123,7 +130,7 @@ export default function EngineeringProcess({
                         animate={{ pathLength: hovered ? 1 : 0 }}
                         transition={
                           hovered
-                            ? { duration: CIRCLE_DRAW_DURATION, delay: i * STEP_DELAY, ease: "easeInOut" }
+                            ? { duration: CIRCLE_DRAW_DURATION, delay: drawIndex * STEP_DELAY, ease: "easeInOut" }
                             : { duration: 0.15, ease: "easeIn" }
                         }
                       />
@@ -134,17 +141,18 @@ export default function EngineeringProcess({
                   </div>
                   <h3
                     className={cn(
-                      "mt-4 text-sm font-bold uppercase tracking-wide",
+                      "mt-4 text-base font-bold uppercase tracking-wide",
                       isDark ? "text-white" : "text-brand-ink"
                     )}
                   >
                     {step.title}
                   </h3>
-                  <p className={cn("mt-1.5 text-xs leading-relaxed", isDark ? "text-white/55" : "text-brand-muted")}>
+                  <p className={cn("mt-1.5 text-sm leading-relaxed", isDark ? "text-white/55" : "text-brand-muted")}>
                     {step.description}
                   </p>
                 </Reveal>
-              ))}
+                );
+              })}
             </div>
           ))}
         </div>

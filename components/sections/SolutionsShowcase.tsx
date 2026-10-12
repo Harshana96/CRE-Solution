@@ -3,7 +3,11 @@
 import { useState, type FormEvent } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { X, Sun, BatteryCharging, PlugZap, Zap, Check, Mail, Phone, ArrowRight } from "lucide-react";
+import { X, Check, Mail, Phone, ArrowRight } from "lucide-react";
+import Sun from "@/components/icons/SolarPanelIcon";
+import PlugZap from "@/components/icons/EvChargingIcon";
+import BatteryCharging from "@/components/icons/BatteryStorageIcon";
+import Zap from "@/components/icons/ElectricalIcon";
 import Container from "@/components/ui/Container";
 import SectionHeading from "@/components/ui/SectionHeading";
 import Reveal from "@/components/ui/Reveal";
@@ -70,7 +74,7 @@ export default function SolutionsShowcase() {
                       alt=""
                       fill
                       sizes="(min-width: 1024px) 50vw, 100vw"
-                      className="object-cover opacity-50"
+                      className="object-cover opacity-80"
                     />
                   ) : (
                     <div
@@ -84,7 +88,7 @@ export default function SolutionsShowcase() {
                   )}
                   <div
                     aria-hidden
-                    className="absolute inset-0 bg-gradient-to-t from-brand-ink via-brand-ink/70 to-brand-ink/20"
+                    className="absolute inset-0 bg-gradient-to-t from-brand-ink/95 via-brand-ink/40 to-transparent"
                   />
 
                   {/* Collapsed content — icon + title, fades out as the tile opens */}
@@ -94,7 +98,7 @@ export default function SolutionsShowcase() {
                     className="pointer-events-none absolute inset-0 flex flex-col justify-end p-5"
                   >
                     <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-brand-red">
-                      <Icon size={20} className="text-white" />
+                      <Icon size={24} className="text-white brightness-0 invert" />
                     </div>
                     <span className="mt-3 block text-[11px] font-bold uppercase tracking-widest text-brand-red">
                       {solution.number}
@@ -111,7 +115,7 @@ export default function SolutionsShowcase() {
                     className={`absolute inset-0 flex flex-col justify-end p-7 ${isOpen ? "" : "pointer-events-none"}`}
                   >
                     <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-brand-red">
-                      <Icon size={22} className="text-white" />
+                      <Icon size={26} className="text-white brightness-0 invert" />
                     </div>
                     <span className="mt-4 block text-xs font-bold uppercase tracking-widest text-brand-red">
                       Solution {solution.number}
@@ -180,7 +184,7 @@ export default function SolutionsShowcase() {
                     alt=""
                     fill
                     sizes="50vw"
-                    className="object-cover opacity-50"
+                    className="object-cover opacity-80"
                   />
                 ) : (
                   <div
@@ -194,11 +198,11 @@ export default function SolutionsShowcase() {
                 )}
                 <div
                   aria-hidden
-                  className="absolute inset-0 bg-gradient-to-t from-brand-ink via-brand-ink/70 to-brand-ink/20"
+                  className="absolute inset-0 bg-gradient-to-t from-brand-ink/95 via-brand-ink/40 to-transparent"
                 />
                 <div className="relative z-10">
                   <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-brand-red">
-                    <Icon size={20} className="text-white" />
+                    <Icon size={24} className="text-white brightness-0 invert" />
                   </div>
                   <span className="mt-3 block text-[11px] font-bold uppercase tracking-widest text-brand-red">
                     {solution.number}
