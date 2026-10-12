@@ -43,7 +43,7 @@ export default function HomePage() {
             </Button>
           </Reveal>
           <div className="mt-12">
-            <ProjectGrid limit={4} />
+            <ProjectGrid limit={8} />
           </div>
         </Container>
       </section>

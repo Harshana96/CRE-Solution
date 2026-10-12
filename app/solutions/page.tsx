@@ -1,6 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Sun, BatteryCharging, PlugZap, Zap, ArrowUpRight } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
+import Sun from "@/components/icons/SolarPanelIcon";
+import PlugZap from "@/components/icons/EvChargingIcon";
+import BatteryCharging from "@/components/icons/BatteryStorageIcon";
+import Zap from "@/components/icons/ElectricalIcon";
 import PageHero from "@/components/sections/PageHero";
 import ContactCTA from "@/components/sections/ContactCTA";
 import Container from "@/components/ui/Container";
@@ -24,14 +28,6 @@ export default function SolutionsOverviewPage() {
         eyebrow="What We Deliver"
         title="Our Energy Solutions"
         description="Four disciplines, one engineering team. Explore each solution to see how CRE Solutions designs, installs and supports it."
-        images={[
-          "/images/projects/kiyoto-coffee-mathale.jpg",
-          "/images/projects/mr-janitha-just-computer-kurunegala.jpg",
-          "/images/projects/kmee-restaurant-gampaha.jpg",
-          "/images/projects/mr-kamal-dambokka-kurunegala.jpg",
-          "/images/projects/mr-piyumal-kurunegala.jpg",
-          "/images/projects/trincomalee-mr-dewinda.jpg",
-        ]}
       />
 
       <section className="bg-white py-24">
@@ -47,7 +43,7 @@ export default function SolutionsOverviewPage() {
                 >
                   <div className="flex items-center justify-between">
                     <IconPop delay={i * 0.08} className="flex h-14 w-14 items-center justify-center rounded-lg bg-brand-ink">
-                      <Icon size={26} className="text-brand-red" />
+                      <Icon size={32} className="text-brand-red" />
                     </IconPop>
                     <span className="font-heading text-3xl font-extrabold text-brand-muted">
                       {solution.number}

@@ -1,5 +1,9 @@
 import type { Metadata } from "next";
-import { Phone, Mail, MapPin, Globe, Sun, BatteryCharging, PlugZap, Zap } from "lucide-react";
+import { Phone, Mail, MapPin, Globe } from "lucide-react";
+import Sun from "@/components/icons/SolarPanelIcon";
+import PlugZap from "@/components/icons/EvChargingIcon";
+import BatteryCharging from "@/components/icons/BatteryStorageIcon";
+import Zap from "@/components/icons/ElectricalIcon";
 import PageHero from "@/components/sections/PageHero";
 import ContactForm from "@/components/sections/ContactForm";
 import Container from "@/components/ui/Container";
@@ -34,7 +38,7 @@ export default function ContactPage() {
                 <Reveal key={s.slug} delay={i * 0.06}>
                   <div className="group flex flex-col items-center gap-3 rounded-xl border border-brand-line bg-brand-light p-6 text-center">
                     <IconPop delay={i * 0.06}>
-                      <Icon size={22} className="text-brand-red" />
+                      <Icon size={26} className="text-brand-red" />
                     </IconPop>
                     <span className="text-xs font-bold uppercase tracking-wide text-brand-ink">
                       {s.shortTitle}

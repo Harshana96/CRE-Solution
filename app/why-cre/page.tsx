@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import PageHero from "@/components/sections/PageHero";
 import WhyChooseUs from "@/components/sections/WhyChooseUs";
+import EngineeringProcess from "@/components/sections/EngineeringProcess";
 import Leadership from "@/components/sections/Leadership";
 import Stats from "@/components/sections/Stats";
 import ContactCTA from "@/components/sections/ContactCTA";
@@ -18,17 +19,10 @@ export default function WhyCrePage() {
         eyebrow="Engineering Expertise. Quality Solutions. Reliable Service."
         title="Why Choose CRE Solutions"
         description="Your requirement. Our engineering. A solution built for a brighter tomorrow."
-        images={[
-          "/images/projects/trincomalee-mr-dewinda.jpg",
-          "/images/projects/kmee-restaurant-gampaha.jpg",
-          "/images/projects/kiyoto-coffee-mathale.jpg",
-          "/images/projects/mr-kamal-dambokka-kurunegala.jpg",
-          "/images/projects/dr-yamuna-kurunegala.jpg",
-          "/images/projects/mr-piyumal-kurunegala.jpg",
-        ]}
       />
       <Stats tone="light" />
       <WhyChooseUs />
+      <EngineeringProcess tone="dark" />
       <Leadership />
       <ContactCTA />
     </>
